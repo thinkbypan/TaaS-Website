@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Ideas — THiNK</title>
+<meta name="description" content="Ideas from THiNK: articles and podcast episodes that move thinking forward.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=Inter:wght@400;500;600&family=Bodoni+Moda:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<canvas id="emberCanvas"></canvas>
+<header>
+  <a href="index.html" class="logo"><span class="brand-logo">TH<span class="brand-logo-i">i</span>NK</span> <span class="logo-sub">powered by PAN</span></a>
+  <button class="menu-btn" id="menuOpen">
+    <span>Menu</span>
+    <span class="bars"><span></span><span></span></span>
+  </button>
+</header>
+<div class="overlay" id="overlay">
+  <button class="overlay-close" id="menuClose">Close</button>
+  <nav>
+    <a href="index.html"><span>&rarr;</span>Home</a>
+    <a href="ideas.html"><span>&rarr;</span>Ideas</a>
+    <a href="exchange.html"><span>&rarr;</span>THiNK Exchange</a>
+    <a href="taas.html"><span>&rarr;</span>THiNK-as-a-Service</a>
+    <a href="about.html"><span>&rarr;</span>Who is THiNK</a>
+  </nav>
+  <div class="overlay-foot"><span class="brand-logo">TH<span class="brand-logo-i">i</span>NK</span>, powered by <a href="https://paneffect.co/" target="_blank" rel="noopener noreferrer">PAN</a></div>
+</div>
+<div class="view active" id="view-media">
+<section id="media">
+  <div class="wrap">
+    <span class="eyebrow">Ideas</span>
+    <div class="s-head reveal">
+      <h2>Ideas to <em>spark</em> &amp; <em>ignite</em> thinking<span class="stop">.</span></h2>
+      <p class="bio-copy"><strong class="brand-logo">TH<span class="brand-logo-i">i</span>NK</strong> explores ideas that shape business, performance and the world around us. We question established thinking and introduce perspectives that help people see challenges differently. For ambitious and curious people, <strong class="brand-logo">TH<span class="brand-logo-i">i</span>NK</strong> is a place to discover ideas that expand thinking and create new possibilities.</p>
+      <p class="bio-copy">We put the <em style="color:var(--red);font-style:normal;font-family:'Bodoni 72','Bodoni Moda','Bodoni MT',Georgia,serif;">'i'</em> back into thinking through insights, ideas and innovation.</p>
+    </div>
+
+    <div class="ideas-subscribe reveal">
+      <div class="ideas-subscribe-copy">
+        <span class="ideas-subscribe-label">Subscribe</span>
+        <p class="ideas-subscribe-title">Join the <strong class="brand-logo">TH<span class="brand-logo-i">i</span>NK</strong> Substack and get <strong class="brand-logo">TH<span class="brand-logo-i">i</span>NK</strong>'s ideas direct to your inbox.</p>
+      </div>
+      <form class="ideas-subscribe-form" action="https://thinkbypan.substack.com/subscribe" method="get" target="_blank" rel="noopener noreferrer">
+        <input type="email" name="email" class="ideas-subscribe-input" placeholder="Your email address" aria-label="Email address" required>
+        <button type="submit" class="ideas-subscribe-btn">Subscribe</button>
+      </form>
+    </div>
+
+    <div class="ideas-feed reveal">
+      <div class="ideas-feed-col">
+        <h3 class="feed-col-title">Articles</h3>
+        <div class="feed-list" id="articlesList">
+          <p class="feed-status">Loading latest articles&hellip;</p>
+        </div>
+      </div>
+      <div class="ideas-feed-col">
+        <h3 class="feed-col-title">Podcast</h3>
+        <div class="feed-list" id="podcastList">
+          <p class="feed-status">Loading latest episodes&hellip;</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="cta-row reveal" style="margin-top:48px;">
+      <a href="https://thinkbypan.substack.com" target="_blank" rel="noopener noreferrer" class="btn btn-black"><span>Enter <strong class="brand-logo">TH<span class="brand-logo-i">i</span>NK</strong> Ideas Portal &rarr;</span></a>
+    </div>
+  </div>
+</section>
+<div class="flip-banner">
+  <div class="flip-inner">
+    <div class="flip-face flip-front">Chase the Dreams</div>
+    <div class="flip-face flip-back">Change the World</div>
+  </div>
+</div>
+<footer class="site-footer">
+  <div class="wrap footer-row">
+    <a href="https://paneffect.co/" target="_blank" rel="noopener noreferrer" class="footer-mark-icon" aria-label="Visit PAN Group"></a>
+    <div class="footer-text">
+      <p>&copy; Copyright 2026</p>
+      <p><span class="brand-logo">TH<span class="brand-logo-i">i</span>NK</span>, powered by PAN</p>
+      <p>Ideas Factory</p>
+      <p>Melbourne, Australia</p>
+      <div class="footer-contact-block">
+        <a href="mailto:think@paneffect.co" class="footer-contact-email">think@paneffect.co</a>
+      </div>
+    </div>
+  </div>
+</footer>
+</div>
+<script src="app.js"></script>
+</body>
+</html>

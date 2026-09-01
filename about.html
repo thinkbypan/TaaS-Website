@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Who is THiNK</title>
+<meta name="description" content="Who is THiNK — built by operators, for operators. Powered by PAN.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=Inter:wght@400;500;600&family=Bodoni+Moda:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<canvas id="emberCanvas"></canvas>
+<header>
+  <a href="index.html" class="logo"><span class="brand-logo">TH<span class="brand-logo-i">i</span>NK</span> <span class="logo-sub">powered by PAN</span></a>
+  <button class="menu-btn" id="menuOpen">
+    <span>Menu</span>
+    <span class="bars"><span></span><span></span></span>
+  </button>
+</header>
+<div class="overlay" id="overlay">
+  <button class="overlay-close" id="menuClose">Close</button>
+  <nav>
+    <a href="index.html"><span>&rarr;</span>Home</a>
+    <a href="ideas.html"><span>&rarr;</span>Ideas</a>
+    <a href="exchange.html"><span>&rarr;</span>THiNK Exchange</a>
+    <a href="taas.html"><span>&rarr;</span>THiNK-as-a-Service</a>
+    <a href="about.html"><span>&rarr;</span>Who is THiNK</a>
+  </nav>
+  <div class="overlay-foot"><span class="brand-logo">TH<span class="brand-logo-i">i</span>NK</span>, powered by <a href="https://paneffect.co/" target="_blank" rel="noopener noreferrer">PAN</a></div>
+</div>
+<div class="view active" id="view-about">
+<section id="different">
+  <div class="wrap">
+    <span class="num">01 / Why <strong class="brand-logo">TH<span class="brand-logo-i">i</span>NK</strong> is Different</span>
+    <div class="s-head reveal">
+      <h2>Built by <em>operators</em>,<br>for operators<span class="stop">.</span></h2>
+      <p class="lede"><strong class="brand-logo">TH<span class="brand-logo-i">i</span>NK</strong> is powered by PAN, a group built by operators with direct experience across business transformation, turnarounds, investment, innovation, start ups, operating performance and high-performance environments.</p>
+    </div>
+  </div>
+</section>
+
+<section id="does">
+  <div class="wrap">
+    <span class="num">02 / What <strong class="brand-logo">TH<span class="brand-logo-i">i</span>NK</strong> Does</span>
+    <div class="does-layout">
+      <div class="s-head reveal">
+        <h2>Empowering from the <em>inside-out</em><span class="stop">.</span></h2>
+        <p class="lede"><strong class="brand-logo">TH<span class="brand-logo-i">i</span>NK</strong> helps businesses improve the internal thinking capability required to perform at a higher level.</p>
+        <p class="bio-copy">In many organisations, the knowledge needed to improve performance already exists within the business. Leaders understand the market, the customer, the team and the operating model. The challenge is that insight is often fragmented across the organisation, constrained by existing assumptions, or diluted by the pressures of day-to-day execution.</p>
+        <p class="bio-copy"><strong class="brand-logo">TH<span class="brand-logo-i">i</span>NK</strong> creates the structure and environment to surface insight, develop ideas and turn them into innovation through action.</p>
+        <p class="bio-copy"><strong class="brand-logo">TH<span class="brand-logo-i">i</span>NK</strong> brings an objective view of the business, shaped by operating experience, to help leadership teams focus on the insights and decisions that will materially affect performance. We work with leaders to understand the current position, question existing assumptions, identify the highest-value opportunities and translate strategic intent into action.</p>
+        <p class="bio-copy"><strong class="brand-logo">TH<span class="brand-logo-i">i</span>NK</strong> helps leadership teams create a clear view of where the business is heading, identify what is limiting progress, and make the decisions required to move forward.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="architecture">
+  <div class="wrap">
+    <span class="num">03 / The <strong class="brand-logo">TH<span class="brand-logo-i">i</span>NK</strong> Architecture</span>
+    <div class="s-head reveal" style="margin:0 auto;">
+      <h2>The <span class="brand-logo">TH<span class="brand-logo-i">i</span>NK</span><br><em class="cap">Architecture</em><span class="stop">.</span></h2>
+      <p class="lede" style="margin-left:auto;margin-right:auto;">At the centre of our work is the <strong class="brand-logo">TH<span class="brand-logo-i">i</span>NK</strong> Architecture, a mental model for high performance. It gives leaders the scaffolding to navigate uncertainty, challenge assumptions, build depth of thought and move from insight to disciplined execution.</p>
+    </div>
+    <div class="arch-stage reveal" id="archStage">
+      <canvas id="archCanvas"></canvas>
+      <div class="arch-labels" id="archLabels"></div>
+      <div class="arch-purpose-tag">Purpose</div>
+    </div>
+    <p class="arch-caption reveal" id="archCaption">Select an essence to learn more about the <strong class="brand-logo">TH<span class="brand-logo-i">i</span>NK</strong> Architecture.</p>
+    <p class="arch-hint reveal">Hover or tap a node to explore</p>
+  </div>
+</section>
+
+<section id="cases">
+  <div class="wrap">
+    <span class="num">04 / Case Studies</span>
+    <div class="s-head reveal">
+      <h2>How <strong class="brand-logo">TH<span class="brand-logo-i">i</span>NK</strong> has <em>empowered</em> high performance<span class="stop">.</span></h2>
+    </div>
+
+    <div class="case-strip-wrap reveal" id="caseStripWrap">
+      <button class="case-arrow-big case-prev" aria-label="Previous case study" type="button">&larr;</button>
+      <div class="case-strip-window">
+        <div class="case-strip-track" id="caseStripTrack">
+          <div class="case-tile" data-index="0">
+            <div class="case-slide-head">
+              <span class="case-index">01</span>
+              <h3 class="case-title">Global Beverage Company</h3>
+            </div>
+            <p class="case-context">A high-pressure business transformation involving significant debt, operating complexity and the need to restore performance. The business was carrying approximately $700 million in debt before being turned around and ultimately sold for approximately $1.5 billion.</p>
+            <div class="case-relevance">
+              <span class="case-relevance-label"><strong class="brand-logo">TH<span class="brand-logo-i">i</span>NK</strong> Relevance</span>
+              <p>This business reflects the kind of thinking <strong class="brand-logo">TH<span class="brand-logo-i">i</span>NK</strong> brings to businesses under pressure: clarity on the current reality, sharper priorities, disciplined execution and the ability to convert constraint into commercial momentum.</p>
+            </div>
+          </div>
+          <div class="case-tile" data-index="1">
+            <div class="case-slide-head">
+              <span class="case-index">02</span>
+              <h3 class="case-title">Fast-Moving Consumer Goods</h3>
+            </div>
+            <p class="case-context">A fast-moving consumer goods turnaround where the business was operating under material debt pressure and needed a clear path to improved performance. The business was carrying approximately $70 million in debt and moved through turnaround toward an approximate $100 million sale.</p>
+            <div class="case-relevance">
+              <span class="case-relevance-label"><strong class="brand-logo">TH<span class="brand-logo-i">i</span>NK</strong> Relevance</span>
+              <p><strong class="brand-logo">TH<span class="brand-logo-i">i</span>NK</strong>&rsquo;s ability to work through complexity, identify the issues that matter, and help businesses move from pressure to a clearer performance pathway.</p>
+            </div>
+          </div>
+          <div class="case-tile" data-index="2">
+            <div class="case-slide-head">
+              <span class="case-index">03</span>
+              <h3 class="case-title">Professional Sporting Club</h3>
+            </div>
+            <p class="case-context">A professional sporting environment requiring financial reset, cultural change and performance improvement. The broader transformation included the establishment of a future fund, improved profitability, a Grand Final appearance and, ultimately, a Premiership.</p>
+            <div class="case-relevance">
+              <span class="case-relevance-label"><strong class="brand-logo">TH<span class="brand-logo-i">i</span>NK</strong> Relevance</span>
+              <p>This case reflects a core <strong class="brand-logo">TH<span class="brand-logo-i">i</span>NK</strong> belief: high performance is created through the environment around people.</p>
+            </div>
+          </div>
+          <div class="case-tile" data-index="3">
+            <div class="case-slide-head">
+              <span class="case-index">04</span>
+              <h3 class="case-title">Global Movement Impacting Global Poverty</h3>
+            </div>
+            <p class="case-context">A global movement built around the ambition to end extreme poverty, mobilising people, partners, capital and attention around a shared mission. The work required the ability to convert broad support into coordinated action at scale, align diverse stakeholders and maintain momentum across a complex global network.</p>
+            <div class="case-relevance">
+              <span class="case-relevance-label"><strong class="brand-logo">TH<span class="brand-logo-i">i</span>NK</strong> Relevance</span>
+              <p><strong class="brand-logo">TH<span class="brand-logo-i">i</span>NK</strong>&rsquo;s focus on creating alignment around a clear objective and translating collective intent into meaningful action. It demonstrates what becomes possible when people understand why the organisation exists and work in alignment toward a shared outcome.</p>
+            </div>
+          </div>
+          <div class="case-tile" data-index="4">
+            <div class="case-slide-head">
+              <span class="case-index">05</span>
+              <h3 class="case-title">Australia&rsquo;s Largest Training Business</h3>
+            </div>
+            <p class="case-context">A business acquired out of administration, requiring stabilisation, commercial discipline and a pathway to growth, including acquiring another company, merging business units and leading a technology transformation.</p>
+            <div class="case-relevance">
+              <span class="case-relevance-label"><strong class="brand-logo">TH<span class="brand-logo-i">i</span>NK</strong> Relevance</span>
+              <p><strong class="brand-logo">TH<span class="brand-logo-i">i</span>NK</strong>&rsquo;s focus on converting complexity into clarity, especially when a business needs to stabilise, integrate, transform and build toward long-term value.</p>
+            </div>
+          </div>
+          <div class="case-tile" data-index="5">
+            <div class="case-slide-head">
+              <span class="case-index">06</span>
+              <h3 class="case-title">Idea Incubation Impacting Health Care</h3>
+            </div>
+            <p class="case-context">The incubation of Care Guidance from concept, to in-market, to scaling across Australia, building an early-stage idea into a platform capable of creating meaningful change in the community.</p>
+            <div class="case-relevance">
+              <span class="case-relevance-label"><strong class="brand-logo">TH<span class="brand-logo-i">i</span>NK</strong> Relevance</span>
+              <p>This case reflects the full <strong class="brand-logo">TH<span class="brand-logo-i">i</span>NK</strong> pathway: insights, ideas and innovation, unlocking new opportunities and turning early potential into practical outcomes.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button class="case-arrow-big case-next" aria-label="Next case study" type="button">&rarr;</button>
+    </div>
+    <div class="case-dots" id="caseDots">
+      <button class="case-dot active" data-index="0" aria-label="Show Global Beverage Company" type="button"></button>
+      <button class="case-dot" data-index="1" aria-label="Show Fast-Moving Consumer Goods" type="button"></button>
+      <button class="case-dot" data-index="2" aria-label="Show Professional Sporting Club" type="button"></button>
+      <button class="case-dot" data-index="3" aria-label="Show Global Movement Impacting Global Poverty" type="button"></button>
+      <button class="case-dot" data-index="4" aria-label="Show Australia's Largest Training Business" type="button"></button>
+      <button class="case-dot" data-index="5" aria-label="Show Idea Incubation Impacting Health Care" type="button"></button>
+    </div>
+
+    <p class="case-outro reveal">This experience shapes how we work and how we think about business. We bring commercial judgement, thoughtful questions, performance discipline and a practical understanding of what it takes to move a business from potential to improved performance.</p>
+    <p class="case-outro reveal">We are not interested in strategy that sits outside the operating reality of the business. We are interested in the thinking that changes what the business does next.</p>
+  </div>
+</section>
+
+<section id="who">
+  <div class="wrap">
+    <span class="num">05 / Who <strong class="brand-logo">TH<span class="brand-logo-i">i</span>NK</strong> Works With</span>
+    <div class="s-head reveal">
+      <h2>Ambitious businesses, across every <em>industry</em><span class="stop">.</span></h2>
+      <p class="lede"><strong class="brand-logo">TH<span class="brand-logo-i">i</span>NK</strong> works with ambitious businesses across a range of industries. The operating context may differ, but the underlying performance challenges are often familiar: a lack of prioritisation, inconsistent decision-making, misalignment and difficulty translating strategy into action.</p>
+      <p class="bio-copy"><strong class="brand-logo">TH<span class="brand-logo-i">i</span>NK</strong> is most valuable when a business has strong potential but needs greater clarity around its direction and more discipline in execution to convert that potential into performance.</p>
+    </div>
+    <div class="industries-marquee reveal">
+      <div class="industries-track">
+        <span class="ind">Fast moving consumer goods</span><span class="ind-sep">/</span>
+        <span class="ind">Satellite communications</span><span class="ind-sep">/</span>
+        <span class="ind">Healthcare</span><span class="ind-sep">/</span>
+        <span class="ind">Engineering</span><span class="ind-sep">/</span>
+        <span class="ind">Consumer software</span><span class="ind-sep">/</span>
+        <span class="ind">Construction</span><span class="ind-sep">/</span>
+        <span class="ind">Education</span><span class="ind-sep">/</span>
+        <span class="ind">Space domain awareness</span><span class="ind-sep">/</span>
+        <span class="ind">Computer vision</span><span class="ind-sep">/</span>
+        <span class="ind">Elite sport</span><span class="ind-sep">/</span>
+        <span class="ind">Agriculture</span><span class="ind-sep">/</span>
+        <span class="ind">Therapeutics</span><span class="ind-sep">/</span>
+        <span class="ind">Fast moving consumer goods</span><span class="ind-sep">/</span>
+        <span class="ind">Satellite communications</span><span class="ind-sep">/</span>
+        <span class="ind">Healthcare</span><span class="ind-sep">/</span>
+        <span class="ind">Engineering</span><span class="ind-sep">/</span>
+        <span class="ind">Consumer software</span><span class="ind-sep">/</span>
+        <span class="ind">Construction</span><span class="ind-sep">/</span>
+        <span class="ind">Education</span><span class="ind-sep">/</span>
+        <span class="ind">Space domain awareness</span><span class="ind-sep">/</span>
+        <span class="ind">Computer vision</span><span class="ind-sep">/</span>
+        <span class="ind">Elite sport</span><span class="ind-sep">/</span>
+        <span class="ind">Agriculture</span><span class="ind-sep">/</span>
+        <span class="ind">Therapeutics</span><span class="ind-sep">/</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="flip-banner">
+  <div class="flip-inner">
+    <div class="flip-face flip-front">Chase the Dreams</div>
+    <div class="flip-face flip-back">Change the World</div>
+  </div>
+</div>
+<footer class="site-footer">
+  <div class="wrap footer-row">
+    <a href="https://paneffect.co/" target="_blank" rel="noopener noreferrer" class="footer-mark-icon" aria-label="Visit PAN Group"></a>
+    <div class="footer-text">
+      <p>&copy; Copyright 2026</p>
+      <p><span class="brand-logo">TH<span class="brand-logo-i">i</span>NK</span>, powered by PAN</p>
+      <p>Ideas Factory</p>
+      <p>Melbourne, Australia</p>
+      <div class="footer-contact-block">
+        <a href="mailto:think@paneffect.co" class="footer-contact-email">think@paneffect.co</a>
+      </div>
+    </div>
+  </div>
+</footer>
+</div>
+<script src="app.js"></script>
+</body>
+</html>

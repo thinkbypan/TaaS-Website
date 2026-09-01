@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>THiNK Exchange</title>
+<meta name="description" content="THiNK Exchange brings together curious people, high performers and business leaders to explore ideas that move thinking forward.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=Inter:wght@400;500;600&family=Bodoni+Moda:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<canvas id="emberCanvas"></canvas>
+<header>
+  <a href="index.html" class="logo"><span class="brand-logo">TH<span class="brand-logo-i">i</span>NK</span> <span class="logo-sub">powered by PAN</span></a>
+  <button class="menu-btn" id="menuOpen">
+    <span>Menu</span>
+    <span class="bars"><span></span><span></span></span>
+  </button>
+</header>
+<div class="overlay" id="overlay">
+  <button class="overlay-close" id="menuClose">Close</button>
+  <nav>
+    <a href="index.html"><span>&rarr;</span>Home</a>
+    <a href="ideas.html"><span>&rarr;</span>Ideas</a>
+    <a href="exchange.html"><span>&rarr;</span>THiNK Exchange</a>
+    <a href="taas.html"><span>&rarr;</span>THiNK-as-a-Service</a>
+    <a href="about.html"><span>&rarr;</span>Who is THiNK</a>
+  </nav>
+  <div class="overlay-foot"><span class="brand-logo">TH<span class="brand-logo-i">i</span>NK</span>, powered by <a href="https://paneffect.co/" target="_blank" rel="noopener noreferrer">PAN</a></div>
+</div>
+<div class="view active" id="view-exchange">
+<section id="exchange">
+  <div class="wrap">
+    <span class="eyebrow"><strong class="brand-logo">TH<span class="brand-logo-i">i</span>NK</strong> Exchange</span>
+    <div class="s-head reveal">
+      <h2>Ignite <em>dialogue</em> to exchange <em>ideas</em><span class="stop">.</span></h2>
+      <p class="lede">Spark and ignite thinking that empowers human ingenuity.</p>
+      <p class="bio-copy"><strong class="brand-logo">TH<span class="brand-logo-i">i</span>NK</strong> Exchange brings together curious people, high performers and business leaders to explore ideas that move thinking forward. Through curated events and experiences, <strong class="brand-logo">TH<span class="brand-logo-i">i</span>NK</strong> creates the environment for people to challenge assumptions, expand perspective and engage with the people and ideas that are shaping business, creativity, innovation and performance.</p>
+    </div>
+    <div class="cta-row reveal" style="margin-top:40px;">
+      <a href="exchange.html#waitlist" class="btn btn-primary">Join the Waitlist</a>
+    </div>
+  </div>
+</section>
+
+<section id="waitlist">
+  <div class="wrap">
+    <span class="eyebrow">Join Us</span>
+    <div class="s-head reveal">
+      <h2>Be part of the <em>exchange</em><span class="stop">.</span></h2>
+      <p class="bio-copy"><strong class="brand-logo">TH<span class="brand-logo-i">i</span>NK</strong> creates curated experiences for high performers who are looking to grow and deepen the way they think.</p>
+      <p class="bio-copy">These experiences bring together people with different perspectives and give them the opportunity to exchange ideas, challenge their thinking and learn from one another. Join the waitlist to hear about future <strong class="brand-logo">TH<span class="brand-logo-i">i</span>NK</strong> experiences.</p>
+      <p class="bio-copy">We can't wait to explore ideas with you.</p>
+    </div>
+
+    <form class="waitlist-form reveal" id="waitlistForm">
+      <input type="hidden" name="_subject" value="New THiNK Exchange waitlist signup">
+      <input type="hidden" name="_template" value="table">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
+
+      <div class="form-row">
+        <div class="field">
+          <label for="fname">First name</label>
+          <input id="fname" name="fname" type="text" autocomplete="given-name" required>
+        </div>
+        <div class="field">
+          <label for="lname">Last name</label>
+          <input id="lname" name="lname" type="text" autocomplete="family-name" required>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="field">
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" autocomplete="email" required>
+        </div>
+        <div class="field">
+          <label for="phone">Phone</label>
+          <input id="phone" name="phone" type="tel" autocomplete="tel" required>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="curious">What kind of ideas are you most curious about? <span class="optional">(optional)</span></label>
+        <textarea id="curious" name="curious" rows="3"></textarea>
+      </div>
+
+      <button type="submit" class="btn btn-primary">Join the Waitlist</button>
+      <p class="form-note">By joining the waitlist, you'll be the first to hear about <strong class="brand-logo">TH<span class="brand-logo-i">i</span>NK</strong> Exchange events, curated conversations and experiences.</p>
+      <p class="form-error" id="waitlistError" hidden style="color:var(--red);font-size:13px;margin-top:12px;">Please make sure you've entered your full name and contact details, then try again. If it keeps happening, email us directly at <a href="mailto:think@paneffect.co" style="color:var(--red);">think@paneffect.co</a>.</p>
+    </form>
+
+    <div class="form-success" id="formSuccess" hidden>
+      <h3>You're on the list.</h3>
+      <p>We'll be in touch when <strong class="brand-logo">TH<span class="brand-logo-i">i</span>NK</strong> Exchange events and experiences open up.</p>
+    </div>
+  </div>
+</section>
+
+<div class="flip-banner">
+  <div class="flip-inner">
+    <div class="flip-face flip-front">Chase the Dreams</div>
+    <div class="flip-face flip-back">Change the World</div>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="wrap footer-row">
+    <a href="https://paneffect.co/" target="_blank" rel="noopener noreferrer" class="footer-mark-icon" aria-label="Visit PAN Group"></a>
+    <div class="footer-text">
+      <p>&copy; Copyright 2026</p>
+      <p><span class="brand-logo">TH<span class="brand-logo-i">i</span>NK</span>, powered by PAN</p>
+      <p>Ideas Factory</p>
+      <p>Melbourne, Australia</p>
+      <div class="footer-contact-block">
+        <a href="mailto:think@paneffect.co" class="footer-contact-email">think@paneffect.co</a>
+      </div>
+    </div>
+  </div>
+</footer>
+</div>
+<script src="app.js"></script>
+</body>
+</html>

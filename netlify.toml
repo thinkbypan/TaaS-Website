@@ -1,0 +1,14 @@
+# Netlify configuration for the THiNK static site.
+# The site is plain HTML/CSS/JS with no build step, so we just tell Netlify
+# to publish the repository root as-is.
+
+[build]
+  publish = "."
+  command = ""
+
+# Optional: nicer 404 handling — send unknown paths to the home page.
+# Remove this block if you'd rather Netlify serve its default 404.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 404
