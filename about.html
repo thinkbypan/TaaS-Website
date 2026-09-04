@@ -135,6 +135,10 @@
     background:none;border:none;color:var(--ink);cursor:pointer;
   }
   @media (max-width:640px){.overlay-close{top:29px;right:22px;}}
+  @media (max-width:640px){
+    .overlay{padding:32px 22px;}
+    .overlay nav a{font-size:clamp(16px,5.6vw,40px);letter-spacing:-0.01em;white-space:nowrap;}
+  }
   .overlay nav{display:flex;flex-direction:column;gap:6px;}
   .overlay nav a{
     font-family:'GT Eesti Display','Archivo',sans-serif;font-weight:800;
@@ -158,7 +162,17 @@
   /* --eyebrow-gap: the single spacing between a section eyebrow (.num or
      .eyebrow) and its title, applied identically everywhere. */
   :root{--eyebrow-gap:22px;}
-  .num{font-family:'GT Eesti Display','Archivo',sans-serif;font-size:13px;color:var(--red);font-weight:700;letter-spacing:.05em;margin-bottom:var(--eyebrow-gap);display:block;}
+  .num{
+    font-family:'Inter',sans-serif;
+    font-size:12px;
+    font-weight:600;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    color:var(--red);
+    display:flex;align-items:center;gap:10px;
+    margin-bottom:var(--eyebrow-gap);
+  }
+  .num::before{content:"";width:20px;height:1px;background:var(--red);}
   .num .brand-logo{color:var(--red);}
 
   /* HERO */
@@ -586,10 +600,16 @@
     transition:transform .8s cubic-bezier(.7,0,.2,1);
     transform-style:preserve-3d;
   }
-  .offer-flip:hover .offer-flip-inner,
   .offer-flip.flipped .offer-flip-inner,
   .offer-flip:focus-visible .offer-flip-inner{
     transform:rotateY(180deg);
+  }
+  /* Hover-to-flip only for devices with a real pointer (mouse/trackpad).
+     On touch, a tap leaves a "sticky" :hover behind, which fought with the
+     tap-to-flip JS below and made the card look like it flipped at random —
+     so touch relies solely on the .flipped class toggled by tapping. */
+  @media (hover:hover) and (pointer:fine){
+    .offer-flip:hover .offer-flip-inner{transform:rotateY(180deg);}
   }
   .offer-face{
     grid-area:1 / 1;backface-visibility:hidden;
@@ -630,7 +650,9 @@
     font-size:28px;line-height:1;color:var(--red);display:inline-block;
     transition:transform .35s;
   }
-  .offer-flip:hover .offer-hint-arrow{transform:translateX(10px);}
+  @media (hover:hover) and (pointer:fine){
+    .offer-flip:hover .offer-hint-arrow{transform:translateX(10px);}
+  }
   .offer-flow{margin:32px auto 0;max-width:760px;color:var(--ink);font-size:15px;line-height:1.7;text-align:center;}
   @media (prefers-reduced-motion: reduce){.offer-flip-inner{transition:none;}}
 
@@ -644,6 +666,7 @@
      (which clips the sliding track horizontally) doesn't shave its top/bottom. */
   .case-strip-window{
     flex:1;overflow:hidden;position:relative;padding:14px 0;
+    touch-action:pan-y; /* let JS drive horizontal swipes; vertical page scroll still works */
   }
   .case-strip-track{
     display:flex;gap:28px;align-items:stretch;
@@ -743,7 +766,7 @@
   .faq-item{border-top:1px solid var(--line);}
   .faq-item:last-child{border-bottom:1px solid var(--line);}
   .faq-q{
-    width:100%;text-align:left;background:none;border:none;color:var(--ink);
+    width:100%;text-align:left;background:none;border:none;color:var(--red);
     display:flex;justify-content:space-between;align-items:center;gap:20px;
     padding:26px 0;cursor:pointer;font-family:'GT Eesti Display','Archivo',sans-serif;font-weight:700;font-size:17px;
   }
@@ -752,6 +775,9 @@
   .faq-item.open .plus{transform:rotate(45deg);}
   .faq-a{max-height:0;overflow:hidden;transition:max-height .35s ease;}
   .faq-a p{color:var(--ink);font-size:15px;padding:0 0 26px;max-width:680px;}
+  /* THiNK wordmark reads fully red in the FAQ only (questions and answers),
+     rather than its usual beige-with-red-i everywhere else on the site. */
+  #faq .brand-logo{color:var(--red);}
 
   /* final CTA */
   #final{
@@ -946,6 +972,9 @@
   .flip-front{background:var(--red);color:var(--ink);}
   .flip-back{background:var(--black);color:var(--red);transform:rotateX(180deg);}
   @media (prefers-reduced-motion: reduce){.flip-inner{transition:none;}}
+  @media (max-width:640px){
+    .flip-face{font-size:clamp(14px,5vw,26px);letter-spacing:0;padding:0 20px;white-space:nowrap;}
+  }
 
   /* Dark banner footer, sits flush beneath the flip banner on every page.
      Horizontal layout: PAN ampersand mark | copyright/address | contact,
@@ -1146,7 +1175,7 @@
 <div class="view active" id="view-about">
 <section id="different">
   <div class="wrap">
-    <span class="num">01 / Why <strong class="brand-logo">TH<span class="brand-logo-i">i</span>NK</strong> is Different</span>
+    <span class="num">01 / Why THiNK is Different</span>
     <div class="s-head reveal">
       <h2>Built by <em>operators</em>,<br>for operators<span class="stop">.</span></h2>
       <p class="lede"><strong class="brand-logo">TH<span class="brand-logo-i">i</span>NK</strong> is powered by PAN, a group built by operators with direct experience across business transformation, turnarounds, investment, innovation, start ups, operating performance and high-performance environments.</p>
@@ -1156,7 +1185,7 @@
 
 <section id="does">
   <div class="wrap">
-    <span class="num">02 / What <strong class="brand-logo">TH<span class="brand-logo-i">i</span>NK</strong> Does</span>
+    <span class="num">02 / What THiNK Does</span>
     <div class="does-layout">
       <div class="s-head reveal">
         <h2>Empowering from the <em>inside-out</em><span class="stop">.</span></h2>
@@ -1172,7 +1201,7 @@
 
 <section id="architecture">
   <div class="wrap">
-    <span class="num">03 / The <strong class="brand-logo">TH<span class="brand-logo-i">i</span>NK</strong> Architecture</span>
+    <span class="num">03 / The THiNK Architecture</span>
     <div class="s-head reveal" style="margin:0 auto;">
       <h2>The <span class="brand-logo">TH<span class="brand-logo-i">i</span>NK</span><br><em class="cap">Architecture</em><span class="stop">.</span></h2>
       <p class="lede" style="margin-left:auto;margin-right:auto;">At the centre of our work is the <strong class="brand-logo">TH<span class="brand-logo-i">i</span>NK</strong> Architecture, a mental model for high performance. It gives leaders the scaffolding to navigate uncertainty, challenge assumptions, build depth of thought and move from insight to disciplined execution.</p>
@@ -1203,7 +1232,7 @@
               <span class="case-index">01</span>
               <h3 class="case-title">Global Beverage Company</h3>
             </div>
-            <p class="case-context">A high-pressure business transformation involving significant debt, operating complexity and the need to restore performance. The business was carrying approximately $700 million in debt before being turned around and ultimately sold for approximately $1.5 billion.</p>
+            <p class="case-context">A high-pressure business transformation involving significant debt, operating complexity and the need to restore performance. The business was carrying over $700 million in debt before being turned around and ultimately sold for $1.5 billion.</p>
             <div class="case-relevance">
               <span class="case-relevance-label"><strong class="brand-logo">TH<span class="brand-logo-i">i</span>NK</strong> Relevance</span>
               <p>This business reflects the kind of thinking <strong class="brand-logo">TH<span class="brand-logo-i">i</span>NK</strong> brings to businesses under pressure: clarity on the current reality, sharper priorities, disciplined execution and the ability to convert constraint into commercial momentum.</p>
@@ -1214,7 +1243,7 @@
               <span class="case-index">02</span>
               <h3 class="case-title">Fast-Moving Consumer Goods</h3>
             </div>
-            <p class="case-context">A fast-moving consumer goods turnaround where the business was operating under material debt pressure and needed a clear path to improved performance. The business was carrying approximately $70 million in debt and moved through turnaround toward an approximate $100 million sale.</p>
+            <p class="case-context">A fast-moving consumer goods turnaround where the business was carrying more than $700 million in debt when <strong class="brand-logo">TH<span class="brand-logo-i">i</span>NK</strong> became involved. The work focused on improving performance, stabilising the operating position and creating a path toward a successful $160 million sale.</p>
             <div class="case-relevance">
               <span class="case-relevance-label"><strong class="brand-logo">TH<span class="brand-logo-i">i</span>NK</strong> Relevance</span>
               <p><strong class="brand-logo">TH<span class="brand-logo-i">i</span>NK</strong>&rsquo;s ability to work through complexity, identify the issues that matter, and help businesses move from pressure to a clearer performance pathway.</p>
@@ -1225,7 +1254,7 @@
               <span class="case-index">03</span>
               <h3 class="case-title">Professional Sporting Club</h3>
             </div>
-            <p class="case-context">A professional sporting environment requiring financial reset, cultural change and performance improvement. The broader transformation included the establishment of a future fund, improved profitability, a Grand Final appearance and, ultimately, a Premiership.</p>
+            <p class="case-context">A professional sporting environment requiring financial reset, cultural change and performance improvement. The broader transformation included the establishment of a future fund, improved profitability, repeated finals appearances and championship.</p>
             <div class="case-relevance">
               <span class="case-relevance-label"><strong class="brand-logo">TH<span class="brand-logo-i">i</span>NK</strong> Relevance</span>
               <p>This case reflects a core <strong class="brand-logo">TH<span class="brand-logo-i">i</span>NK</strong> belief: high performance is created through the environment around people.</p>
@@ -1245,9 +1274,9 @@
           <div class="case-tile" data-index="4">
             <div class="case-slide-head">
               <span class="case-index">05</span>
-              <h3 class="case-title">Australia&rsquo;s Largest Training Business</h3>
+              <h3 class="case-title">Leading Online Training Business</h3>
             </div>
-            <p class="case-context">A business acquired out of administration, requiring stabilisation, commercial discipline and a pathway to growth, including acquiring another company, merging business units and leading a technology transformation.</p>
+            <p class="case-context">A business acquired in distress and repositioned for growth. The transformation included stabilising the operating position, strengthening commercial discipline, acquiring another company, integrating business units and leading a major technology transformation, while continuing to train tens of thousands of people each year.</p>
             <div class="case-relevance">
               <span class="case-relevance-label"><strong class="brand-logo">TH<span class="brand-logo-i">i</span>NK</strong> Relevance</span>
               <p><strong class="brand-logo">TH<span class="brand-logo-i">i</span>NK</strong>&rsquo;s focus on converting complexity into clarity, especially when a business needs to stabilise, integrate, transform and build toward long-term value.</p>
@@ -1256,9 +1285,9 @@
           <div class="case-tile" data-index="5">
             <div class="case-slide-head">
               <span class="case-index">06</span>
-              <h3 class="case-title">Idea Incubation Impacting Health Care</h3>
+              <h3 class="case-title">Innovative Health Start Up</h3>
             </div>
-            <p class="case-context">The incubation of Care Guidance from concept, to in-market, to scaling across Australia, building an early-stage idea into a platform capable of creating meaningful change in the community.</p>
+            <p class="case-context">The incubation of a healthcare platform business, from concept to market and then scale across Australia, building an early-stage idea into a platform designed to create meaningful impact across the healthcare industry.</p>
             <div class="case-relevance">
               <span class="case-relevance-label"><strong class="brand-logo">TH<span class="brand-logo-i">i</span>NK</strong> Relevance</span>
               <p>This case reflects the full <strong class="brand-logo">TH<span class="brand-logo-i">i</span>NK</strong> pathway: insights, ideas and innovation, unlocking new opportunities and turning early potential into practical outcomes.</p>
@@ -1273,8 +1302,8 @@
       <button class="case-dot" data-index="1" aria-label="Show Fast-Moving Consumer Goods" type="button"></button>
       <button class="case-dot" data-index="2" aria-label="Show Professional Sporting Club" type="button"></button>
       <button class="case-dot" data-index="3" aria-label="Show Global Movement Impacting Global Poverty" type="button"></button>
-      <button class="case-dot" data-index="4" aria-label="Show Australia's Largest Training Business" type="button"></button>
-      <button class="case-dot" data-index="5" aria-label="Show Idea Incubation Impacting Health Care" type="button"></button>
+      <button class="case-dot" data-index="4" aria-label="Show Leading Online Training Business" type="button"></button>
+      <button class="case-dot" data-index="5" aria-label="Show Innovative Health Start Up" type="button"></button>
     </div>
 
     <p class="case-outro reveal">This experience shapes how we work and how we think about business. We bring commercial judgement, thoughtful questions, performance discipline and a practical understanding of what it takes to move a business from potential to improved performance.</p>
@@ -1284,7 +1313,7 @@
 
 <section id="who">
   <div class="wrap">
-    <span class="num">05 / Who <strong class="brand-logo">TH<span class="brand-logo-i">i</span>NK</strong> Works With</span>
+    <span class="num">05 / Who THiNK Works With</span>
     <div class="s-head reveal">
       <h2>Ambitious businesses, across every <em>industry</em><span class="stop">.</span></h2>
       <p class="lede"><strong class="brand-logo">TH<span class="brand-logo-i">i</span>NK</strong> works with ambitious businesses across a range of industries. The operating context may differ, but the underlying performance challenges are often familiar: a lack of prioritisation, inconsistent decision-making, misalignment and difficulty translating strategy into action.</p>
@@ -1320,6 +1349,7 @@
     </div>
     <div class="cta-row reveal" style="margin-top:48px;">
       <a href="https://paneffect.co/people/" target="_blank" rel="noopener noreferrer" class="btn btn-primary"><span>Meet the team</span></a>
+      <a href="taas.html#enquiryForm" class="btn btn-primary"><span>Work with THiNK</span></a>
     </div>
   </div>
 </section>
@@ -1933,6 +1963,7 @@
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const count = tiles.length;
     let index = 0;
+    let suppressClick = false; // true right after a swipe, so it doesn't also register as a tap
 
     function layout(){
       // centre the active tile within the visible window, so neighbouring
@@ -1993,7 +2024,47 @@
     dots.forEach((d, i) => d.addEventListener('click', () => goTo(i)));
     if(nextBtn) nextBtn.addEventListener('click', () => goTo(index + 1));
     if(prevBtn) prevBtn.addEventListener('click', () => goTo(index - 1));
-    tiles.forEach((t, i) => t.addEventListener('click', () => { if(i !== index) goTo(i); }));
+    tiles.forEach((t, i) => t.addEventListener('click', () => {
+      if(suppressClick){ suppressClick = false; return; }
+      if(i !== index) goTo(i);
+    }));
+
+    // --- Swipe support (touch) ------------------------------------------
+    // Lets a visitor flick left/right through the case studies on mobile,
+    // alongside the dots/arrows above (which stay as-is). Only acts on a
+    // clear horizontal drag past a small threshold, so normal vertical page
+    // scrolling and a plain tap (which still selects a peeking tile) both
+    // keep working exactly as before.
+    let touchStartX = 0, touchStartY = 0, touchTracking = false, touchHorizontal = false;
+    const SWIPE_THRESHOLD = 40;
+
+    windowEl.addEventListener('touchstart', function(e){
+      if(e.touches.length !== 1) return;
+      touchStartX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
+      touchTracking = true;
+      touchHorizontal = false;
+    }, { passive: true });
+
+    windowEl.addEventListener('touchmove', function(e){
+      if(!touchTracking) return;
+      const dx = e.touches[0].clientX - touchStartX;
+      const dy = e.touches[0].clientY - touchStartY;
+      if(!touchHorizontal && Math.abs(dx) > 10 && Math.abs(dx) > Math.abs(dy)) touchHorizontal = true;
+      if(touchHorizontal) e.preventDefault(); // a clear horizontal swipe takes over from page scroll
+    }, { passive: false });
+
+    windowEl.addEventListener('touchend', function(e){
+      if(!touchTracking) return;
+      touchTracking = false;
+      if(!touchHorizontal) return;
+      const t0 = e.changedTouches && e.changedTouches[0];
+      const dx = (t0 ? t0.clientX : touchStartX) - touchStartX;
+      if(Math.abs(dx) > SWIPE_THRESHOLD){
+        suppressClick = true;
+        goTo(dx < 0 ? index + 1 : index - 1);
+      }
+    });
 
     // start/stop timing as the carousel enters / leaves the viewport
     if('IntersectionObserver' in window){

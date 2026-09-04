@@ -124,6 +124,10 @@
     background:none;border:none;color:var(--ink);cursor:pointer;
   }
   @media (max-width:640px){.overlay-close{top:29px;right:22px;}}
+  @media (max-width:640px){
+    .overlay{padding:32px 22px;}
+    .overlay nav a{font-size:clamp(16px,5.6vw,40px);letter-spacing:-0.01em;white-space:nowrap;}
+  }
   .overlay nav{display:flex;flex-direction:column;gap:6px;}
   .overlay nav a{
     font-family:'GT Eesti Display','Archivo',sans-serif;font-weight:800;
@@ -147,7 +151,17 @@
   /* --eyebrow-gap: the single spacing between a section eyebrow (.num or
      .eyebrow) and its title, applied identically everywhere. */
   :root{--eyebrow-gap:22px;}
-  .num{font-family:'GT Eesti Display','Archivo',sans-serif;font-size:13px;color:var(--red);font-weight:700;letter-spacing:.05em;margin-bottom:var(--eyebrow-gap);display:block;}
+  .num{
+    font-family:'Inter',sans-serif;
+    font-size:12px;
+    font-weight:600;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    color:var(--red);
+    display:flex;align-items:center;gap:10px;
+    margin-bottom:var(--eyebrow-gap);
+  }
+  .num::before{content:"";width:20px;height:1px;background:var(--red);}
   .num .brand-logo{color:var(--red);}
 
   /* HERO */
@@ -574,10 +588,16 @@
     transition:transform .8s cubic-bezier(.7,0,.2,1);
     transform-style:preserve-3d;
   }
-  .offer-flip:hover .offer-flip-inner,
   .offer-flip.flipped .offer-flip-inner,
   .offer-flip:focus-visible .offer-flip-inner{
     transform:rotateY(180deg);
+  }
+  /* Hover-to-flip only for devices with a real pointer (mouse/trackpad).
+     On touch, a tap leaves a "sticky" :hover behind, which fought with the
+     tap-to-flip JS below and made the card look like it flipped at random —
+     so touch relies solely on the .flipped class toggled by tapping. */
+  @media (hover:hover) and (pointer:fine){
+    .offer-flip:hover .offer-flip-inner{transform:rotateY(180deg);}
   }
   .offer-face{
     grid-area:1 / 1;backface-visibility:hidden;
@@ -618,7 +638,9 @@
     font-size:28px;line-height:1;color:var(--red);display:inline-block;
     transition:transform .35s;
   }
-  .offer-flip:hover .offer-hint-arrow{transform:translateX(10px);}
+  @media (hover:hover) and (pointer:fine){
+    .offer-flip:hover .offer-hint-arrow{transform:translateX(10px);}
+  }
   .offer-flow{margin:32px auto 0;max-width:760px;color:var(--ink);font-size:15px;line-height:1.7;text-align:center;}
   @media (prefers-reduced-motion: reduce){.offer-flip-inner{transition:none;}}
 
@@ -632,6 +654,7 @@
      (which clips the sliding track horizontally) doesn't shave its top/bottom. */
   .case-strip-window{
     flex:1;overflow:hidden;position:relative;padding:14px 0;
+    touch-action:pan-y; /* let JS drive horizontal swipes; vertical page scroll still works */
   }
   .case-strip-track{
     display:flex;gap:28px;align-items:stretch;
@@ -731,7 +754,7 @@
   .faq-item{border-top:1px solid var(--line);}
   .faq-item:last-child{border-bottom:1px solid var(--line);}
   .faq-q{
-    width:100%;text-align:left;background:none;border:none;color:var(--ink);
+    width:100%;text-align:left;background:none;border:none;color:var(--red);
     display:flex;justify-content:space-between;align-items:center;gap:20px;
     padding:26px 0;cursor:pointer;font-family:'GT Eesti Display','Archivo',sans-serif;font-weight:700;font-size:17px;
   }
@@ -740,6 +763,9 @@
   .faq-item.open .plus{transform:rotate(45deg);}
   .faq-a{max-height:0;overflow:hidden;transition:max-height .35s ease;}
   .faq-a p{color:var(--ink);font-size:15px;padding:0 0 26px;max-width:680px;}
+  /* THiNK wordmark reads fully red in the FAQ only (questions and answers),
+     rather than its usual beige-with-red-i everywhere else on the site. */
+  #faq .brand-logo{color:var(--red);}
 
   /* final CTA */
   #final{
@@ -934,6 +960,9 @@
   .flip-front{background:var(--red);color:var(--ink);}
   .flip-back{background:var(--black);color:var(--red);transform:rotateX(180deg);}
   @media (prefers-reduced-motion: reduce){.flip-inner{transition:none;}}
+  @media (max-width:640px){
+    .flip-face{font-size:clamp(14px,5vw,26px);letter-spacing:0;padding:0 20px;white-space:nowrap;}
+  }
 
   /* Dark banner footer, sits flush beneath the flip banner on every page.
      Horizontal layout: PAN ampersand mark | copyright/address | contact,
