@@ -257,7 +257,7 @@
     text-box-edge:cap alphabetic;
     text-box:trim-start cap alphabetic;
   }
-  .s-head h2 em{
+  .s-head h2 em, .taas-head em{
     color:var(--red);
     font-style:normal;
     font-family:'Bodoni 72','Bodoni Moda','Bodoni MT',Georgia,serif;
@@ -311,7 +311,6 @@
   .lc{text-transform:lowercase;}
   .keep-case{text-transform:none;}
   .taas-head{font-size:clamp(30px,5vw,58px);line-height:1.12;}
-  .taas-head .service{color:var(--red);font-family:'Bodoni 72','Bodoni Moda','Bodoni MT',Georgia,serif;font-style:normal;font-weight:500;font-size:1.4em;text-transform:lowercase;}
   .taas-line{max-width:600px;color:var(--ink);font-size:18px;margin-top:24px;}
 
   /* pillars */
@@ -557,22 +556,23 @@
     .unlock-row, .unlock-row.reverse{animation:none;}
   }
 
-  /* ===== TaaS page: track-record impact grid (GT Eesti bold labels + red Bodoni 72 figures) ===== */
-  .impact-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);margin-top:56px;}
-  @media (max-width:900px){.impact-grid{grid-template-columns:repeat(2,1fr);}}
-  @media (max-width:600px){.impact-grid{grid-template-columns:1fr;}}
+  /* ===== TaaS page: track-record impact grid (GT Eesti bold labels + large red Bodoni 72 figures, no card boxes) ===== */
+  .impact-grid{display:grid;grid-template-columns:repeat(3,1fr);column-gap:40px;row-gap:48px;margin-top:64px;}
+  @media (max-width:900px){.impact-grid{grid-template-columns:1fr;row-gap:44px;}}
   .impact-card{
-    background:var(--black);padding:38px 30px;transition:background .3s;
-    display:flex;flex-direction:column;gap:14px;
+    display:flex;flex-direction:column;gap:12px;
   }
-  .impact-card:hover{background:var(--panel);}
   .impact-figure{
     font-family:'Bodoni 72','Bodoni Moda','Bodoni MT',Georgia,serif;
-    font-style:normal;color:var(--red);font-weight:500;font-size:clamp(24px,3vw,34px);line-height:1.15;
+    font-style:normal;color:var(--red);font-weight:500;font-size:clamp(30px,5vw,58px);line-height:1.12;
   }
   .impact-label{
     font-family:'GT Eesti Display','Archivo',sans-serif;font-weight:700;
-    color:var(--ink);font-size:14.5px;line-height:1.5;text-transform:none;letter-spacing:0;
+    color:var(--ink);font-size:15.5px;line-height:1.5;text-transform:none;letter-spacing:0;max-width:280px;
+  }
+  .impact-ref{
+    font-family:'GT Eesti Display','Archivo',sans-serif;font-weight:400;
+    color:var(--ink);opacity:.55;font-size:12.5px;letter-spacing:.03em;text-transform:uppercase;
   }
 
   /* ===== TaaS page: offerings grid (Project / Execution / Lab / Bespoke) ===== */
@@ -1179,59 +1179,89 @@
 <section id="taas">
   <div class="wrap">
     <span class="num">01 / THiNK-as-a-Service</span>
-    <h2 class="taas-head reveal">THiNK-AS-A-SERVICE<span class="stop">.</span></h2>
-    <p class="taas-line reveal">We help businesses understand what is holding back performance, then work with leadership teams to improve it.</p>
-    <p class="taas-line reveal"><strong class="brand-logo">TH<span class="brand-logo-i">i</span>NK</strong><strong>-as-a-Service</strong> brings an objective perspective to the knowledge already inside the organisation, helping leadership teams uncover and triangulate insights, understand where the strongest opportunities sit, build conviction around what needs to change and define a practical path forward.</p>
+    <h2 class="taas-head reveal">TURNING <em>strategy</em><br>INTO <em>operating performance</em><span class="stop">.</span></h2>
+    <p class="taas-line reveal">Businesses invest significant time in strategy, decision-making and building capable teams, however performance often breaks down between what the organisation knows and what it is able to execute.</p>
+    <p class="taas-line reveal">The gap appears when strategic intent does not carry through into day-to-day operations. Turning strategy into operating performance requires clear priorities, shared context and decisions that remain connected to the direction of the business.</p>
+
+    <div class="impact-grid reveal">
+      <div class="impact-card">
+        <div class="impact-figure">67%</div>
+        <div class="impact-label">of strategies fail because of poor execution and alignment.</div>
+        <div class="impact-ref">Harvard Business Review</div>
+      </div>
+      <div class="impact-card">
+        <div class="impact-figure">40%</div>
+        <div class="impact-label">of executive time is spent on decisions that could be made faster.</div>
+        <div class="impact-ref">McKinsey &amp; Company</div>
+      </div>
+      <div class="impact-card">
+        <div class="impact-figure">&lt;5%</div>
+        <div class="impact-label">of people understand the strategy their organisation is working toward.</div>
+        <div class="impact-ref">Kaplan et al.</div>
+      </div>
+    </div>
+
+    <p class="taas-line reveal" style="margin-top:40px;"><strong><strong class="brand-logo">TH<span class="brand-logo-i">i</span>NK</strong>-as-a-Service exists to close this gap.</strong></p>
+    <p class="taas-line reveal">We work alongside teams and individuals to connect the knowledge, experience and perspectives already inside the organisation, creating a clearer view of what is impacting performance and where the business needs to focus.</p>
+    <p class="taas-line reveal">The result is clearer priorities, stronger decisions and better execution.</p>
     <div class="cta-row reveal" style="margin-top:40px;">
       <a href="#final" class="btn btn-primary"><span>Start a <strong class="brand-logo">TH<span class="brand-logo-i">i</span>NK</strong> Conversation</span></a>
     </div>
   </div>
 </section>
 
-<section id="gap">
-  <div class="wrap">
-    <span class="num">02 / The Challenge</span>
-    <div class="s-head reveal">
-      <h2>EVERY CHALLENGE BEGINS WITH <em>thinking</em><span class="stop">.</span></h2>
-    </div>
-    <p class="gap-copy reveal">A business can be full of capable people and good ideas and still fall short of its potential. <strong class="brand-logo">TH<span class="brand-logo-i">i</span>NK</strong> helps uncover what is getting in the way.</p>
-    <p class="gap-copy reveal">What looks like an execution problem often starts earlier. Priorities may be unclear, different parts of the business may see the same challenge differently, decision-making may be slow or inconsistent, or the organisation may simply have outgrown the way it currently operates.</p>
-    <p class="gap-copy reveal">These are the kinds of constraints that are difficult to see from inside the day-to-day. <strong class="brand-logo">TH<span class="brand-logo-i">i</span>NK</strong> helps leadership teams step back, challenge the current view of the business and focus attention where change will have the greatest effect.</p>
-    <p class="gap-copy reveal">Our approach is to empower from the inside out, helping the business use its own knowledge and capability to improve how it operates and performs.</p>
-    <div class="cta-row reveal" style="margin-top:40px;">
-      <a href="about.html" class="btn btn-primary"><span>Who is <strong class="brand-logo">TH<span class="brand-logo-i">i</span>NK</strong></span></a>
-    </div>
-  </div>
-</section>
-
 <section id="offerings">
   <div class="wrap">
-    <span class="num">03 / Ways to Work With THiNK</span>
+    <span class="num">02 / Ways to Work With THiNK</span>
     <div class="s-head reveal">
       <h2>Choose the engagement that fits the <em>challenge</em><span class="stop">.</span></h2>
-      <p class="lede"><strong class="brand-logo">TH<span class="brand-logo-i">i</span>NK</strong> meets businesses and people at different points in their performance journey. Each offering can be engaged on its own, or combined into a broader performance partnership.</p>
+      <p class="lede"><strong class="brand-logo">TH<span class="brand-logo-i">i</span>NK</strong> can be used to work through one important question, understand a broader performance challenge or support the business through execution.</p>
     </div>
 
     <div class="offer-grid reveal" id="offerGrid">
-      <div class="offer-flip" tabindex="0" role="button" aria-label="Hover or tap to reveal Project detail">
+      <div class="offer-flip" tabindex="0" role="button" aria-label="Hover or tap to reveal Lab detail">
         <div class="offer-flip-inner">
           <div class="offer-face offer-front">
             <div class="offer-slide-head">
               <span class="offer-index">01</span>
-              <h3 class="offer-title">Project</h3>
+              <h3 class="offer-title">Lab</h3>
             </div>
-            <p class="offer-tagline">Understand what is constraining performance and build the plan</p>
+            <p class="offer-tagline">Work deeply on one important challenge</p>
             <div class="offer-hint"><span class="offer-hint-arrow">&rarr;</span>Tap or hover to explore</div>
           </div>
           <div class="offer-face offer-back">
             <div class="offer-slide-head">
               <span class="offer-index">01</span>
+              <h3 class="offer-title">Lab</h3>
+            </div>
+            <p class="offer-copy">A focused three-session experience that gives a leadership team the space and structure to work through a defined challenge, opportunity or strategic question.</p>
+            <div class="offer-meta">
+              <div><span class="offer-label">Best for</span><p>A specific issue that requires deeper thinking and leadership alignment.</p></div>
+              <div><span class="offer-label">You leave with</span><p>A clearer understanding of the issue, the critical priorities and a practical path forward.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="offer-flip" tabindex="0" role="button" aria-label="Hover or tap to reveal Project detail">
+        <div class="offer-flip-inner">
+          <div class="offer-face offer-front">
+            <div class="offer-slide-head">
+              <span class="offer-index">02</span>
               <h3 class="offer-title">Project</h3>
             </div>
-            <p class="offer-copy">For businesses working through a strategic question, performance challenge, growth opportunity or period of change.</p>
+            <p class="offer-tagline">Understand what is constraining performance and build the path forward</p>
+            <div class="offer-hint"><span class="offer-hint-arrow">&rarr;</span>Tap or hover to explore</div>
+          </div>
+          <div class="offer-face offer-back">
+            <div class="offer-slide-head">
+              <span class="offer-index">02</span>
+              <h3 class="offer-title">Project</h3>
+            </div>
+            <p class="offer-copy"><strong class="brand-logo">TH<span class="brand-logo-i">i</span>NK</strong> works inside the business alongside leadership to understand where performance can improve and translate strategic intent into clearer priorities and execution.</p>
             <div class="offer-meta">
-              <div><span class="offer-label">Best for</span><p>Businesses facing a strategic question, performance challenge, growth opportunity or period of transition.</p></div>
-              <div><span class="offer-label">What it delivers</span><p>A clear view of the business and a strategic operating plan.</p></div>
+              <div><span class="offer-label">Best for</span><p>Businesses working through a performance challenge, growth opportunity, strategic shift or period of change.</p></div>
+              <div><span class="offer-label">You leave with</span><p>A clear view of where performance can be accelerated, alignment on the priorities and ownership of what happens next.</p></div>
             </div>
           </div>
         </div>
@@ -1241,45 +1271,21 @@
         <div class="offer-flip-inner">
           <div class="offer-face offer-front">
             <div class="offer-slide-head">
-              <span class="offer-index">02</span>
-              <h3 class="offer-title">Execution</h3>
-            </div>
-            <p class="offer-tagline">Turn the plan into sustained action</p>
-            <div class="offer-hint"><span class="offer-hint-arrow">&rarr;</span>Tap or hover to explore</div>
-          </div>
-          <div class="offer-face offer-back">
-            <div class="offer-slide-head">
-              <span class="offer-index">02</span>
-              <h3 class="offer-title">Execution</h3>
-            </div>
-            <p class="offer-copy">For businesses that know the direction but need support carrying it through the organisation. <strong class="brand-logo">TH<span class="brand-logo-i">i</span>NK</strong> works alongside the team on ownership, accountability, operating rhythm and implementation.</p>
-            <div class="offer-meta">
-              <div><span class="offer-label">Best for</span><p>Businesses that have clarity on the plan but need support maintaining momentum and execution discipline.</p></div>
-              <div><span class="offer-label">What it delivers</span><p>Greater execution discipline and momentum.</p></div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="offer-flip" tabindex="0" role="button" aria-label="Hover or tap to reveal Lab detail">
-        <div class="offer-flip-inner">
-          <div class="offer-face offer-front">
-            <div class="offer-slide-head">
               <span class="offer-index">03</span>
-              <h3 class="offer-title">Lab</h3>
+              <h3 class="offer-title">Execution</h3>
             </div>
-            <p class="offer-tagline">Work through one important challenge</p>
+            <p class="offer-tagline">Turn direction into sustained action</p>
             <div class="offer-hint"><span class="offer-hint-arrow">&rarr;</span>Tap or hover to explore</div>
           </div>
           <div class="offer-face offer-back">
             <div class="offer-slide-head">
               <span class="offer-index">03</span>
-              <h3 class="offer-title">Lab</h3>
+              <h3 class="offer-title">Execution</h3>
             </div>
-            <p class="offer-copy">A focused thinking experience for leadership teams that need time and structure to examine a specific question or opportunity.</p>
+            <p class="offer-copy">For businesses that know where they want to go but need support carrying that direction through the organisation. <strong class="brand-logo">TH<span class="brand-logo-i">i</span>NK</strong> works alongside the team to strengthen accountability, decision-making and operating rhythm so the plan keeps moving.</p>
             <div class="offer-meta">
-              <div><span class="offer-label">Best for</span><p>Leadership teams that need a focused thinking experience around a specific challenge, opportunity or strategic question.</p></div>
-              <div><span class="offer-label">What it delivers</span><p>New insight and a clearer way forward.</p></div>
+              <div><span class="offer-label">Best for</span><p>Businesses with strategic clarity that need stronger execution.</p></div>
+              <div><span class="offer-label">You leave with</span><p>Greater momentum and a more disciplined approach to execution.</p></div>
             </div>
           </div>
         </div>
@@ -1300,10 +1306,9 @@
               <span class="offer-index">04</span>
               <h3 class="offer-title">Bespoke</h3>
             </div>
-            <p class="offer-copy">For organisations that need a broader performance partnership combining elements of Project, Execution and Lab.</p>
-            <div class="offer-meta">
-              <div><span class="offer-label">Best for</span><p>Businesses that want a customised performance partnership rather than a fixed product.</p></div>
-              <div><span class="offer-label">What it delivers</span><p>A tailored engagement built around the needs of the organisation.</p></div>
+            <p class="offer-copy">For organisations that need a broader performance partnership across thinking, strategy and execution. A bespoke engagement can combine elements of Lab, Project and Execution around the needs of the organisation.</p>
+            <div class="offer-meta" style="grid-template-columns:1fr;">
+              <div><span class="offer-label">You leave with</span><p>A partnership built around the performance challenge, rather than a fixed methodology.</p></div>
             </div>
           </div>
         </div>
@@ -1316,24 +1321,20 @@
 
 <section id="mindset">
   <div class="wrap">
-    <span class="num">04 / The Mindset for High-Performance</span>
+    <span class="num">03 / How We THiNK</span>
     <div class="s-head reveal">
-      <h2>Mindset for <em>High-Performance</em><span class="stop">.</span></h2>
+      <h2>High performance begins with <em>thinking differently</em><span class="stop">.</span></h2>
     </div>
-    <p class="gap-copy reveal"><strong class="brand-logo">TH<span class="brand-logo-i">i</span>NK</strong> is a mindset anchored in the pursuit of high performance.</p>
-    <p class="gap-copy reveal">High performance is not treated as a fixed destination or a final standard to be reached. It is the ongoing discipline of understanding where you are, being clear on where you are trying to go and identifying the best next step to move closer to it.</p>
-    <p class="mindset-quote reveal">There is always another mountain</p>
-    <p class="gap-copy reveal">That philosophy shapes how we work with businesses. Improvement is intentional, it requires the willingness to examine what is working, confront what is limiting performance and remain open to a better idea than the one currently held.</p>
-    <p class="gap-copy reveal"><strong class="brand-logo">TH<span class="brand-logo-i">i</span>NK</strong> is different because we do not approach a business with a predetermined answer. We use questions to create better thinking. The aim is to help people inside the organisation surface new insight, test assumptions, explore different ideas and build stronger conviction around what should happen next.</p>
-    <p class="gap-copy reveal">The best preparation you can bring into <strong class="brand-logo">TH<span class="brand-logo-i">i</span>NK</strong> is curiosity and a willingness to have established assumptions challenged. Come prepared to ask questions, contribute your perspective and engage seriously with the thinking.</p>
-    <p class="gap-copy reveal">The objective is not to reach conclusions quickly. It is to develop the quality of insight required to make stronger decisions and move the business forward with greater clarity and confidence.</p>
+    <p class="gap-copy reveal">High performance is an ongoing discipline. It requires a clear view of where the business is today, where it is trying to go and what needs to happen next.</p>
+    <p class="gap-copy reveal"><strong class="brand-logo">TH<span class="brand-logo-i">i</span>NK</strong> does not enter a business with a predetermined answer. We create the conditions for better thinking by asking questions, testing assumptions and bringing different perspectives together.</p>
+    <p class="gap-copy reveal">The aim is to help the people closest to the business develop stronger insight, make better decisions and turn strategy into action.</p>
     <p class="mindset-quote reveal">The question is more powerful than the answer</p>
   </div>
 </section>
 
 <section id="faq">
   <div class="wrap">
-    <span class="num">05 / FAQ</span>
+    <span class="num">04 / FAQ</span>
     <div class="s-head reveal">
       <h2>Questions for the <em>curious</em><span class="stop">.</span></h2>
     </div>
