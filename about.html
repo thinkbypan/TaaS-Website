@@ -1530,6 +1530,9 @@
     // Same-origin path that netlify.toml proxies straight to the Substack feed.
     // Being same-origin means no CORS problem and no third-party proxy to go down.
     const SAME_ORIGIN_FEED = '/substack-feed';
+    // thinkbypan.co is served by GitHub Pages, where /substack-feed doesn't exist,
+    // so fall back to the Netlify Function directly (it sends a CORS header).
+    const NETLIFY_FEED = 'https://thinkbypan.netlify.app/substack-feed';
     const FETCH_TIMEOUT_MS = 8000;
     const CACHE_KEY = 'think_substack_feed_v1';
     const CACHE_TTL_MS = 30 * 60 * 1000;
@@ -1634,7 +1637,10 @@
     }
     // 1st choice: the site's own Netlify proxy (see netlify.toml).
     function fetchViaNetlify(){
-      return fetchWithTimeout(SAME_ORIGIN_FEED)
+      return fetchFeedXml(SAME_ORIGIN_FEED).catch(() => fetchFeedXml(NETLIFY_FEED));
+    }
+    function fetchFeedXml(url){
+      return fetchWithTimeout(url)
         .then(res => { if(!res.ok) throw new Error('Feed proxy ' + res.status); return res.text(); })
         .then(xmlText => {
           const items = parseRssXml(xmlText);

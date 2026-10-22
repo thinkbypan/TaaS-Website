@@ -6,12 +6,13 @@
   publish = "."
   command = ""
 
-# Proxy the THiNK Substack RSS feed through this site (same origin = no CORS).
+# Serve the THiNK Substack RSS feed via netlify/functions/substack-feed.mjs
+# (adds a CORS header so thinkbypan.co on GitHub Pages can use it too).
 # Used by the Ideas page feed in app.js / the inline page scripts.
 # Must stay ABOVE the catch-all 404 rule below.
 [[redirects]]
   from = "/substack-feed"
-  to = "https://thinkbypan.substack.com/feed"
+  to = "/.netlify/functions/substack-feed"
   status = 200
   force = true
 
