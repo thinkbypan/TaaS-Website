@@ -90,7 +90,7 @@ deploy and test exactly as with the waitlist:
 | Last name   | `lastname`       | contact |
 | Email       | `email`          | contact |
 | Company     | `company`        | creates/associates a **company** record |
-| What they want to solve | `what_are_you_looking_to_solve` | custom property — must be on the form |
+| What they want to solve | `what_are_you_looking_to_solve_` | custom property — must be on the form |
 
 Set its email notification (**Settings → Notifications** → `think@paneffect.co`)
 and test with a real submission. A failure logs to the console as
@@ -121,7 +121,7 @@ firstname: get('fname'), lastname: get('lname'), email: get('email'),
 what_are_you_curious_about: get('curious')
 // enquiry
 firstname: get('fname'), lastname: get('lname'), email: get('email'), company: get('company'),
-what_are_you_looking_to_solve: get('message')
+what_are_you_looking_to_solve_: get('message')
 ```
 
 Each open-text answer now lands in its own custom contact property, so you can

@@ -6,6 +6,15 @@
   publish = "."
   command = ""
 
+# Proxy the THiNK Substack RSS feed through this site (same origin = no CORS).
+# Used by the Ideas page feed in app.js / the inline page scripts.
+# Must stay ABOVE the catch-all 404 rule below.
+[[redirects]]
+  from = "/substack-feed"
+  to = "https://thinkbypan.substack.com/feed"
+  status = 200
+  force = true
+
 # Optional: nicer 404 handling — send unknown paths to the home page.
 # Remove this block if you'd rather Netlify serve its default 404.
 [[redirects]]

@@ -144,8 +144,10 @@
 
     const SUBSTACK_FEED_URL = 'https://thinkbypan.substack.com/feed';
     const RSS2JSON_API = 'https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent(SUBSTACK_FEED_URL);
-    const ALLORIGINS_API = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(SUBSTACK_FEED_URL);
-    const CORSPROXY_API = 'https://corsproxy.io/?url=' + encodeURIComponent(SUBSTACK_FEED_URL);
+    // Same-origin path that netlify.toml proxies straight to the Substack feed.
+    // Being same-origin means no CORS problem and no third-party proxy to go down.
+    const SAME_ORIGIN_FEED = '/substack-feed';
+    const FETCH_TIMEOUT_MS = 8000;
     const CACHE_KEY = 'think_substack_feed_v1';
     const CACHE_TTL_MS = 30 * 60 * 1000;
 
@@ -239,8 +241,27 @@
       return;
     }
 
+    // Every request gets a timeout, so a proxy that hangs can never leave the
+    // lists stuck on "Loading…" — it just falls through to the next source.
+    function fetchWithTimeout(url){
+      const ctrl = (typeof AbortController !== 'undefined') ? new AbortController() : null;
+      const timer = ctrl ? setTimeout(() => ctrl.abort(), FETCH_TIMEOUT_MS) : null;
+      return fetch(url, ctrl ? { signal: ctrl.signal } : undefined)
+        .finally(() => { if(timer) clearTimeout(timer); });
+    }
+    // 1st choice: the site's own Netlify proxy (see netlify.toml).
+    function fetchViaNetlify(){
+      return fetchWithTimeout(SAME_ORIGIN_FEED)
+        .then(res => { if(!res.ok) throw new Error('Feed proxy ' + res.status); return res.text(); })
+        .then(xmlText => {
+          const items = parseRssXml(xmlText);
+          if(!items.length) throw new Error('Empty feed from Netlify proxy');
+          return items;
+        });
+    }
+    // Backup: rss2json (rate-limited public service).
     function fetchViaRss2json(){
-      return fetch(RSS2JSON_API)
+      return fetchWithTimeout(RSS2JSON_API)
         .then(res => res.json())
         .then(data => {
           if(data.status !== 'ok' || !Array.isArray(data.items) || !data.items.length){
@@ -249,28 +270,9 @@
           return data.items;
         });
     }
-    function fetchViaAllorigins(){
-      return fetch(ALLORIGINS_API)
-        .then(res => res.text())
-        .then(xmlText => {
-          const items = parseRssXml(xmlText);
-          if(!items.length) throw new Error('Unexpected feed response from allorigins');
-          return items;
-        });
-    }
-    function fetchViaCorsproxy(){
-      return fetch(CORSPROXY_API)
-        .then(res => res.text())
-        .then(xmlText => {
-          const items = parseRssXml(xmlText);
-          if(!items.length) throw new Error('Unexpected feed response from corsproxy');
-          return items;
-        });
-    }
 
-    fetchViaRss2json()
-      .catch(() => fetchViaAllorigins())
-      .catch(() => fetchViaCorsproxy())
+    fetchViaNetlify()
+      .catch(() => fetchViaRss2json())
       .then(items => {
         applyFeed(items);
         saveToCache(items);
@@ -471,7 +473,7 @@
           phone:     get('phone'),
           company:   get('company'),
           think_audience: 'TaaS',                         // tags the contact's source
-          what_are_you_looking_to_solve: get('message')  // custom contact property
+          what_are_you_looking_to_solve_: get('message')  // custom contact property
         });
       } else {
         // Fallback while the enquiry form isn't configured yet — original behaviour.
