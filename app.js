@@ -778,7 +778,7 @@
         el.className = 'arch-label';
         el.dataset.i = i;
         el.style.color = p.color;
-        el.innerHTML = '<span class="dot" style="background:'+p.color+';color:'+p.color+'"></span>'+p.title;
+        el.innerHTML = p.title;
         el.addEventListener('click', () => setActive(i));
         el.addEventListener('mouseenter', () => { hoverIndex = i; speedMulTarget = 0.35; });
         el.addEventListener('mouseleave', () => { hoverIndex = null; if(activeIndex===null && !purposeActive) speedMulTarget = 1; });
@@ -1020,7 +1020,7 @@
 
     // deep, slow-breathing ember pools low in the composition
     const embers = [];
-    const emberCount = 8;
+    const emberCount = 0; // red glow pools removed: background stays flat black
     for(let i=0;i<emberCount;i++){
       embers.push({
         x: Math.random(),
@@ -1033,27 +1033,44 @@
       });
     }
 
-    // rising spark particles, like embers thrown up from a fire
+    // fire sparks: fast, motion-blurred red streaks thrown up from a fire, drawn at different depths
+    // (far = small and sharp, near = larger and out of focus), echoing the PAN site's flying-ember footage
     const sparks = [];
-    const sparkCount = 90;
-    function spawnSpark(atBottom){
+    const sparkCount = 46;
+    function spawnSpark(initial){
+      const depth = Math.random(); // 0 far .. 1 near
+      const speed = (80 + Math.random()*200) * (0.6 + depth*0.9); // px per second
+      const ang = -Math.PI/2 + (Math.random()-0.5)*1.4; // mostly upward, fanned out like an updraft
       return {
-        x: Math.random(),
-        y: atBottom ? 1 + Math.random()*0.1 : Math.random(),
-        r: 1.0 + Math.random()*2.3,
-        vy: 0.045 + Math.random()*0.09,
-        wob: Math.random()*Math.PI*2,
-        wobSpeed: 0.5 + Math.random()*1.2,
-        wobAmp: 0.004 + Math.random()*0.01,
+        x: Math.random()*W,
+        y: initial ? Math.random()*H : H + 10 + Math.random()*80,
+        vx: Math.cos(ang)*speed, vy: Math.sin(ang)*speed,
+        depth: depth,
+        width: 0.7 + depth*2.2,
         turbSeed: Math.random()*1000,
-        turbSpeed: 0.6 + Math.random()*1.1,
-        driftAmp: 0.012 + Math.random()*0.022,
+        turbSpeed: 0.8 + Math.random()*1.4,
         life: 0,
-        maxLife: 5 + Math.random()*7,
+        maxLife: 1.8 + Math.random()*3.4,
         flicker: Math.random()*Math.PI*2
       };
     }
-    for(let i=0;i<sparkCount;i++) sparks.push(spawnSpark(false));
+    for(let i=0;i<sparkCount;i++) sparks.push(spawnSpark(true));
+
+    // draws one spark as a streak along its direction of travel: a hot head with a tail that fades to nothing
+    function drawStreak(x, y, vx, vy, width, alpha){
+      const sp = Math.sqrt(vx*vx+vy*vy) || 1;
+      const len = Math.min(46, 4 + sp*0.07);
+      const tx = x - vx/sp*len, ty = y - vy/sp*len;
+      const g = ctx.createLinearGradient(tx,ty,x,y);
+      g.addColorStop(0, 'rgba(235,28,36,0)');
+      g.addColorStop(0.6, 'rgba(235,28,36,'+(alpha*0.7).toFixed(3)+')');
+      g.addColorStop(1, 'rgba(255,110,80,'+alpha.toFixed(3)+')');
+      ctx.strokeStyle = g;
+      ctx.lineCap = 'round';
+      ctx.beginPath(); ctx.moveTo(tx,ty); ctx.lineTo(x,y);
+      ctx.globalAlpha = 0.3; ctx.lineWidth = width*3.2; ctx.stroke(); // soft glow
+      ctx.globalAlpha = 1;   ctx.lineWidth = width;     ctx.stroke(); // bright core
+    }
 
     // mouse-reactive embers: a warm glow follows the cursor, stirring up hotter sparks nearby
     const mouse = { x: 0.5, y: 0.5, lastMove: -99999 };
@@ -1064,20 +1081,18 @@
     }, {passive:true});
 
     const mouseSparks = [];
-    const maxMouseSparks = 50;
-    function spawnMouseSpark(nx, ny){
+    const maxMouseSparks = 14;
+    function spawnMouseSpark(px, py){
+      const speed = 60 + Math.random()*120;
+      const ang = -Math.PI/2 + (Math.random()-0.5)*1.6;
       return {
-        x: nx, y: ny,
-        r: 1.3 + Math.random()*2.1,
-        vy: 0.09 + Math.random()*0.15,
-        wob: Math.random()*Math.PI*2,
-        wobSpeed: 0.8 + Math.random()*1.6,
-        wobAmp: 0.006 + Math.random()*0.014,
+        x: px, y: py,
+        vx: Math.cos(ang)*speed, vy: Math.sin(ang)*speed,
+        width: 0.6 + Math.random()*0.9,
         turbSeed: Math.random()*1000,
         turbSpeed: 0.8 + Math.random()*1.3,
-        driftAmp: 0.015 + Math.random()*0.025,
         life: 0,
-        maxLife: 1.5 + Math.random()*1.6,
+        maxLife: 0.8 + Math.random()*1.0,
         flicker: Math.random()*Math.PI*2
       };
     }
@@ -1099,7 +1114,7 @@
       const t = now/1000;
 
       // dark base fill so the layer reads correctly even before/without particles
-      ctx.fillStyle = '#050403';
+      ctx.fillStyle = '#0a0a09';
       ctx.fillRect(0,0,W,H);
 
       // mouse presence: fades out ~1.2s after the cursor stops moving
@@ -1125,7 +1140,7 @@
 
       // soft warm glow that follows the cursor, like embers glowing hotter where you linger
       if(mouseInfluence > 0.01){
-        const a = 0.12*mouseInfluence;
+        const a = 0.035*mouseInfluence;
         const g = ctx.createRadialGradient(mx,my,0,mx,my,proximityR);
         g.addColorStop(0, 'rgba(255,130,95,'+a.toFixed(3)+')');
         g.addColorStop(0.5, 'rgba(235,28,36,'+(a*0.55).toFixed(3)+')');
@@ -1136,87 +1151,57 @@
         ctx.fill();
       }
 
-      // stir up a few hotter sparks right where the cursor moves
-      if(mouseInfluence > 0.05 && mouseSparks.length < maxMouseSparks && Math.random() < 0.35){
+      // stir up a few faint sparks right where the cursor moves
+      if(mouseInfluence > 0.05 && mouseSparks.length < maxMouseSparks && Math.random() < 0.1){
         mouseSparks.push(spawnMouseSpark(
-          mouse.x + (Math.random()-0.5)*0.018,
-          mouse.y + (Math.random()-0.5)*0.018
+          mx + (Math.random()-0.5)*20,
+          my + (Math.random()-0.5)*20
         ));
       }
 
-      // rising sparks: unpredictable, turbulent movement — like embers caught in fire updrafts,
-      // alternating between quick rises and brief floaty pauses rather than a steady climb.
-      // sparks that drift near the cursor burn brighter and larger.
-      sparks.forEach(s => {
-        s.life += dt*motionScale;
-        const speedNoise = noise(t*s.turbSpeed, s.turbSeed);
-        const speedMul = Math.max(0.2, 1 + speedNoise*1.1); // ranges roughly 0.2x - 2.1x, non-linear
-        s.y -= s.vy*speedMul*dt*motionScale;
-        s.wob += s.wobSpeed*dt*motionScale;
-        const driftNoise = noise(t*s.turbSpeed*0.7, s.turbSeed+50);
-        const x = (s.x + Math.sin(s.wob)*s.wobAmp + driftNoise*s.driftAmp) * W;
-        const y = s.y * H;
+      // moves a spark through a turbulent updraft: sideways gusts, a little lift, light drag
+      function stepSpark(s){
+        const step = dt*motionScale;
+        s.life += step;
+        s.vx += noise(t*s.turbSpeed, s.turbSeed)*240*step;
+        s.vy += (noise(t*s.turbSpeed*0.8, s.turbSeed+40)*110 - 25)*step;
+        const drag = Math.pow(0.82, step);
+        s.vx *= drag; s.vy *= drag;
+        s.x += s.vx*step; s.y += s.vy*step;
+      }
+
+      sparks.forEach((s, i) => {
+        stepSpark(s);
         const lifeRatio = s.life / s.maxLife;
-        const fadeIn = Math.min(1, s.life*3);
-        const fadeOut = Math.max(0, 1 - lifeRatio);
-        const tw = 0.6 + 0.4*Math.sin(t*5 + s.flicker);
-        let alpha = 0.65 * fadeIn * fadeOut * tw;
-        let radius = s.r*3;
+        const fadeIn = Math.min(1, s.life*4);
+        const fadeOut = lifeRatio > 0.65 ? Math.max(0, (1 - lifeRatio)/0.35) : 1;
+        const tw = 0.65 + 0.35*Math.sin(t*7 + s.flicker);
+        // near sparks read as out of focus: wider and softer
+        const focus = s.depth > 0.78 ? 0.45 : (0.55 + s.depth*0.45);
+        let alpha = 0.6 * focus * fadeIn * fadeOut * tw;
+        let width = s.depth > 0.78 ? s.width*1.6 : s.width;
         if(mouseInfluence > 0.01){
-          const dx = x-mx, dy = y-my;
-          const dist = Math.sqrt(dx*dx+dy*dy);
-          const proximity = mouseInfluence * Math.max(0, 1 - dist/proximityR);
-          if(proximity > 0){
-            alpha = Math.min(1, alpha*(1+proximity*1.2));
-            radius = radius*(1+proximity*0.5);
-          }
+          const dx = s.x-mx, dy = s.y-my;
+          const proximity = mouseInfluence * Math.max(0, 1 - Math.sqrt(dx*dx+dy*dy)/proximityR);
+          if(proximity > 0) alpha = Math.min(1, alpha*(1+proximity*0.3));
         }
-        if(alpha > 0.01){
-          const g = ctx.createRadialGradient(x,y,0,x,y,radius);
-          g.addColorStop(0, 'rgba(255,150,120,'+alpha.toFixed(3)+')');
-          g.addColorStop(0.4, 'rgba(235,28,36,'+(alpha*0.7).toFixed(3)+')');
-          g.addColorStop(1, 'rgba(235,28,36,0)');
-          ctx.fillStyle = g;
-          ctx.beginPath();
-          ctx.arc(x,y,radius,0,Math.PI*2);
-          ctx.fill();
-        }
-        if(s.y < -0.05 || s.life > s.maxLife){
-          const idx = sparks.indexOf(s);
-          sparks[idx] = spawnSpark(true);
+        if(alpha > 0.01) drawStreak(s.x, s.y, s.vx, s.vy, width, alpha);
+        if(s.y < -60 || s.x < -60 || s.x > W+60 || s.life > s.maxLife){
+          sparks[i] = spawnSpark(false);
         }
       });
 
-      // hot cursor-trail sparks: brighter, quicker fade, dissipate like disturbed embers
+      // faint cursor sparks: short-lived streaks that flick up and vanish
       for(let i=mouseSparks.length-1;i>=0;i--){
         const s = mouseSparks[i];
-        s.life += dt*motionScale;
-        const speedNoise = noise(t*s.turbSpeed, s.turbSeed);
-        const speedMul = Math.max(0.2, 1 + speedNoise*1.1);
-        s.y -= s.vy*speedMul*dt*motionScale;
-        s.wob += s.wobSpeed*dt*motionScale;
-        const driftNoise = noise(t*s.turbSpeed*0.7, s.turbSeed+50);
-        const x = (s.x + Math.sin(s.wob)*s.wobAmp + driftNoise*s.driftAmp) * W;
-        const y = s.y * H;
+        stepSpark(s);
         const lifeRatio = s.life / s.maxLife;
         const fadeIn = Math.min(1, s.life*6);
         const fadeOut = Math.max(0, 1 - lifeRatio);
-        const tw = 0.7 + 0.3*Math.sin(t*6 + s.flicker);
-        const alpha = fadeIn * fadeOut * tw * 0.65;
-        if(alpha > 0.01){
-          const radius = s.r*2.7;
-          const g = ctx.createRadialGradient(x,y,0,x,y,radius);
-          g.addColorStop(0, 'rgba(255,185,145,'+alpha.toFixed(3)+')');
-          g.addColorStop(0.4, 'rgba(255,60,40,'+(alpha*0.75).toFixed(3)+')');
-          g.addColorStop(1, 'rgba(235,28,36,0)');
-          ctx.fillStyle = g;
-          ctx.beginPath();
-          ctx.arc(x,y,radius,0,Math.PI*2);
-          ctx.fill();
-        }
-        if(s.y < -0.05 || s.life > s.maxLife){
-          mouseSparks.splice(i,1);
-        }
+        const tw = 0.7 + 0.3*Math.sin(t*8 + s.flicker);
+        const alpha = fadeIn * fadeOut * tw * 0.28;
+        if(alpha > 0.01) drawStreak(s.x, s.y, s.vx, s.vy, s.width, alpha);
+        if(s.life > s.maxLife) mouseSparks.splice(i,1);
       }
 
       requestAnimationFrame(frame);

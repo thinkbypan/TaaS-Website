@@ -34,10 +34,11 @@
     --line:#232220;
     --red:#eb1c24;
     --panel:#121110;
+    --beige:#E3DDD3;
     --serif-tight: -0.02em;
   }
   *{margin:0;padding:0;box-sizing:border-box;}
-  html{scroll-behavior:smooth;background:#050403;}
+  html{scroll-behavior:smooth;background:#0a0a09;}
   body{
     background:transparent;
     color:var(--ink);
@@ -148,7 +149,7 @@
     font-family:'GT Eesti Display','Archivo',sans-serif;font-weight:800;
     font-size:clamp(32px,7vw,64px);text-transform:uppercase;
     color:var(--ink);
-    padding:10px 0;border-bottom:1px solid var(--line);
+    padding:10px 0;
     transition:color .25s, padding-left .25s;
   }
   .overlay nav a:hover{color:var(--ink);padding-left:14px;}
@@ -162,7 +163,7 @@
   .overlay-foot a{color:var(--red);text-decoration:none;transition:opacity .25s ease;}
   .overlay-foot a:hover{opacity:.7;}
 
-  section{position:relative;padding:min(18vh,150px) 0;border-bottom:1px solid var(--line);}
+  section{position:relative;padding:min(18vh,150px) 0;}
   /* --eyebrow-gap: the single spacing between a section eyebrow (.num or
      .eyebrow) and its title, applied identically everywhere. */
   :root{--eyebrow-gap:22px;}
@@ -182,10 +183,7 @@
   /* HERO */
   #hero{
     min-height:100vh;display:flex;flex-direction:column;justify-content:center;
-    border-bottom:1px solid var(--line);
-    background:
-      radial-gradient(ellipse 80% 60% at 50% 0%, rgba(235,28,36,0.14), transparent 60%),
-      var(--black);
+    background:var(--black);
   }
   #hero .wrap{padding-top:100px;}
   .hero-head{
@@ -287,10 +285,11 @@
   /* WHAT / WHY split */
   .gap-copy{max-width:680px;color:var(--ink);font-size:16px;line-height:1.75;margin-top:32px;}
   .gap-copy + .gap-copy{margin-top:16px;}
+  /* same font, size and spacing as the body copy above it, just in red */
   .mindset-quote{
-    font-family:'GT Eesti Display','Archivo',sans-serif;font-weight:700;font-style:italic;
-    color:var(--red);font-size:clamp(15px,1.6vw,18px);line-height:1.4;
-    max-width:680px;margin:20px 0;
+    font-family:'Inter',sans-serif;font-weight:400;font-style:normal;
+    color:var(--red);font-size:17px;line-height:1.6;
+    max-width:calc(var(--jp-width, 832px) - var(--jp-bleed, 48px));margin:16px 0 0;
   }
   .big-stat{font-family:'GT Eesti Display','Archivo',sans-serif;font-size:clamp(40px,6vw,80px);font-weight:800;color:var(--ink);}
 
@@ -298,11 +297,10 @@
   .triad{margin-top:56px;display:flex;flex-direction:column;}
   .triad-row{
     display:grid;grid-template-columns:180px 1fr 40px;gap:24px;align-items:center;
-    padding:26px 0;border-top:1px solid var(--line);
+    padding:26px 0;
     transition:padding-left .3s;
   }
   .triad-row:hover{padding-left:14px;}
-  .triad-row:last-child{border-bottom:1px solid var(--line);}
   .triad-row .from{color:var(--ink);font-size:14px;}
   .triad-row .to{font-family:'GT Eesti Display','Archivo',sans-serif;font-weight:700;font-size:19px;}
   .triad-row .arrow{color:var(--red);font-size:20px;text-align:right;}
@@ -319,24 +317,22 @@
   .taas-line{max-width:600px;color:var(--ink);font-size:18px;margin-top:24px;}
 
   /* pillars */
-  .pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);margin-top:56px;}
+  .pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:transparent;margin-top:56px;}
   @media (max-width:800px){.pillars{grid-template-columns:1fr;}}
-  .pillar{background:var(--black);padding:38px 30px;transition:background .3s;}
-  .pillar:hover{background:var(--panel);}
+  .pillar{background:transparent;padding:38px 30px;transition:background-color .45s ease;}
   .pillar .num{margin-bottom:30px;}
   .pillar h3{font-size:22px;margin-bottom:14px;}
   .pillar p{color:var(--ink);font-size:15px;}
 
   /* how we help grid */
-  .help-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);margin-top:56px;}
+  .help-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:transparent;margin-top:56px;}
   @media (max-width:900px){.help-grid{grid-template-columns:repeat(2,1fr);}}
   @media (max-width:520px){.help-grid{grid-template-columns:1fr;}}
   .help-card{
-    background:var(--black);padding:34px 26px;min-height:230px;
+    background:transparent;padding:34px 26px;min-height:230px;
     display:flex;flex-direction:column;justify-content:space-between;
-    cursor:pointer;transition:background .3s;
+    cursor:pointer;transition:background-color .45s ease;
   }
-  .help-card:hover{background:var(--panel);}
   .help-card .num{color:var(--ink);}
   .help-card h3{font-size:20px;margin:14px 0 10px;}
   .help-card p{
@@ -345,24 +341,39 @@
   }
   .help-card:hover p, .help-card.active p{max-height:120px;}
 
+  /* same reversed PAN hover as the home panels: the card under the cursor fills beige and its
+     beige text flips to black (red accents stay red). --ink is re-pointed inside the card only. */
+  @media (hover:hover){
+    .pillar:hover, .help-card:hover, .impact-card:hover{background-color:var(--beige);--ink:var(--black);}
+  }
+  .help-card.active{background-color:var(--beige);--ink:var(--black);}
+
   /* IDEAS PAGE: live Substack feed columns */
   .ideas-feed{
     display:grid;grid-template-columns:1fr 1fr;gap:64px;
-    margin-top:64px;padding-top:48px;border-top:1px solid var(--line);
+    margin-top:64px;padding-top:48px;
   }
   @media (max-width:800px){.ideas-feed{grid-template-columns:1fr;gap:44px;}}
+  /* column titles match the page subtitle (e.g. 'Ideas to spark & ignite thinking.') */
   .feed-col-title{
-    font-family:'Inter',sans-serif;font-size:12px;font-weight:600;
-    letter-spacing:.18em;text-transform:uppercase;color:var(--red);
-    padding-bottom:16px;margin-bottom:24px;border-bottom:1px solid var(--line);
+    font-family:'Inter',sans-serif;font-weight:700;
+    font-size:clamp(20px,2.4vw,28px);line-height:1.3;
+    letter-spacing:0;text-transform:none;color:var(--ink);
+    padding-bottom:0;margin-bottom:12px;
   }
   .feed-list{display:flex;flex-direction:column;gap:26px;}
+  /* each Substack item is a panel that fills beige on hover, like the home page panels */
+  .feed-list{margin:0 -28px;gap:6px;}
   .feed-item{
-    display:block;padding-bottom:26px;border-bottom:1px solid var(--line);
-    transition:opacity .25s;
+    display:block;padding:26px 28px;color:var(--ink);
+    background-color:transparent;transition:background-color .45s ease, color .45s ease;
   }
-  .feed-item:last-child{border-bottom:none;padding-bottom:0;}
-  .feed-item:hover{opacity:.75;}
+  @media (hover:hover){
+    .feed-item:hover{background-color:var(--beige);--ink:var(--black);}
+  }
+  .feed-item:focus-visible{background-color:var(--beige);--ink:var(--black);outline:none;}
+  .feed-status{padding:0 28px;}
+  @media (max-width:640px){.feed-list{margin:0 -20px;}.feed-item{padding:22px 20px;}.feed-status{padding:0 20px;}}
   .feed-item-date{
     font-family:'Inter',sans-serif;font-size:11px;font-weight:600;
     letter-spacing:.1em;text-transform:uppercase;color:var(--ink);opacity:.55;
@@ -372,46 +383,93 @@
     font-size:19px;line-height:1.28;margin:10px 0 8px;
     text-transform:none;letter-spacing:0;transition:color .2s;
   }
-  .feed-item:hover .feed-item-title{color:var(--red);}
+  .feed-item-title{color:var(--ink);transition:color .45s ease;}
   .feed-item-sub{color:var(--ink);opacity:.75;font-size:14px;line-height:1.55;font-family:'Inter',sans-serif;}
   .feed-status{color:var(--ink);opacity:.6;font-size:14px;line-height:1.6;}
   .feed-status a{color:var(--red);text-decoration:underline;text-underline-offset:3px;}
 
-  /* IDEAS PAGE: subtle Substack subscribe strip */
+  /* IDEAS PAGE: Substack subscribe, sitting under the title block; the email field
+     matches the Exchange form fields (underline, beige while typing) */
   .ideas-subscribe{
-    display:flex;flex-direction:column;align-items:flex-start;gap:18px;
-    margin:48px 0 8px;padding:18px 24px 18px 20px;
-    border-left:2px solid var(--red);
+    display:flex;align-items:flex-end;gap:20px;flex-wrap:wrap;
+    margin-top:34px;max-width:calc(var(--jp-width, 832px) - var(--jp-bleed, 48px));
   }
-  .ideas-subscribe-copy{max-width:420px;}
-  .ideas-subscribe-label{
-    font-family:'Inter',sans-serif;font-size:11px;font-weight:600;
-    letter-spacing:.16em;text-transform:uppercase;color:var(--red);
-    display:block;margin-bottom:6px;
-  }
-  .ideas-subscribe-title{
-    font-family:'Inter',sans-serif;font-size:14px;line-height:1.55;
-    color:var(--ink);opacity:.85;margin:0;
-  }
-  .ideas-subscribe-title .brand-logo{font-size:.95em;}
-  .ideas-subscribe-form{display:flex;gap:10px;flex-wrap:wrap;flex-shrink:0;}
   .ideas-subscribe-input{
-    font-family:'Inter',sans-serif;font-size:13px;color:var(--ink);
-    background:transparent;border:1px solid var(--line);border-radius:100px;
-    padding:11px 18px;min-width:220px;outline:none;transition:border-color .2s;
+    flex:1;min-width:220px;
+    font-family:'Inter',sans-serif;font-size:16px;color:var(--ink);
+    background:transparent;border:none;border-bottom:1px solid var(--line);border-radius:0;
+    padding:12px 14px;outline:none;caret-color:var(--red);
+    transition:border-color .25s, background-color .45s ease, color .45s ease;
   }
   .ideas-subscribe-input::placeholder{color:var(--ink);opacity:.5;}
-  .ideas-subscribe-input:focus{border-color:var(--red);}
-  .ideas-subscribe-btn{
-    font-family:'Inter',sans-serif;font-weight:600;font-size:12px;letter-spacing:.06em;text-transform:uppercase;
-    background:var(--red);color:var(--black);border:none;border-radius:100px;
-    padding:11px 26px;cursor:pointer;transition:background .2s, transform .2s;
-  }
-  .ideas-subscribe-btn:hover{background:var(--ink);transform:translateY(-1px);}
+  .ideas-subscribe-input:focus{border-color:var(--red);background-color:var(--beige);color:var(--black);}
+  .ideas-subscribe-input:focus::placeholder{color:var(--black);}
+  .ideas-subscribe-btn{border:none;cursor:pointer;flex:none;}
+  /* intro copy: same size and width as the Exchange intro */
+  #media .s-head{max-width:none;}
+  #media .ideas-intro{margin-top:44px;}
+  #media .ideas-intro .lede{max-width:calc(var(--jp-width, 832px) - var(--jp-bleed, 48px));margin-top:0;}
+  #media .ideas-intro .lede + .lede{margin-top:16px;}
+  #media .ideas-intro .lede.ideas-explore{margin-top:40px;}
   @media (max-width:700px){
-    .ideas-subscribe-form{width:100%;}
-    .ideas-subscribe-input{flex:1;min-width:0;}
+    .ideas-subscribe-input{min-width:0;width:100%;flex:1 1 100%;}
   }
+  /* subscribe sits in the same beige-on-hover box as the Exchange sign-up */
+  /* box lines up with the copy: same left edge and same width as the paragraphs above */
+  .join-panel.ideas-sub-panel{margin:40px 0 0;max-width:calc(var(--jp-width, 832px) - var(--jp-bleed, 48px));}
+  .ideas-sub-panel .ideas-subscribe{margin-top:0;max-width:none;}
+  .join-panel:hover .ideas-subscribe-input, .join-panel:focus-within .ideas-subscribe-input{border-bottom-color:rgba(10,10,9,0.25);}
+  .join-panel .ideas-subscribe-input:focus{background-color:var(--black);color:var(--beige);border-color:var(--red);}
+  .join-panel .ideas-subscribe-input:focus::placeholder{color:var(--beige);}
+  /* Ideas page ends flush on the banner: the 'explore more' link is the last panel */
+  #media{padding-bottom:0;}
+  .ideas-more{
+    display:flex;align-items:center;gap:14px;margin:40px -28px 0;padding:30px 28px;
+    font-family:'Inter',sans-serif;font-weight:600;font-size:13px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--ink);background-color:transparent;transition:background-color .45s ease, color .45s ease;
+  }
+  .ideas-more-arrow{color:var(--red);font-size:22px;letter-spacing:0;transition:transform .3s;}
+  @media (hover:hover){
+    .ideas-more:hover{background-color:var(--beige);--ink:var(--black);}
+    .ideas-more:hover .ideas-more-arrow{transform:translateX(8px);}
+  }
+  .ideas-more:focus-visible{background-color:var(--beige);--ink:var(--black);outline:none;}
+  @media (max-width:640px){.ideas-more{margin:32px -20px 0;padding:26px 20px;}}
+
+  /* ===== Mirrored section style (TaaS + About), matching Ideas / Exchange:
+     big title with red rule, bold subtitle, then body copy at one size and width ===== */
+  .x-sec .x-head{max-width:none;text-align:left;margin-left:0;margin-right:0;}
+  .x-sec h2.ex-title{margin:0;max-width:none;}
+  .x-sec .x-head .ex-tagline + .lede,
+  .x-sec .x-head .ex-tagline + .bio-copy{margin-top:28px;}
+  .x-sec .lede, .x-sec .bio-copy, .x-sec .taas-line, .x-sec .gap-copy{
+    font-size:17px;line-height:1.6;color:var(--ink);
+    max-width:calc(var(--jp-width, 832px) - var(--jp-bleed, 48px));margin-left:0;margin-right:0;
+  }
+  .x-sec .bio-copy, .x-sec .gap-copy{margin-top:16px;}
+  .x-sec .x-head + .taas-line, .x-sec .x-head + .gap-copy{margin-top:28px;}
+  .x-sec .taas-line{margin-top:16px;}
+  /* About architecture: heading block now left-aligned; the visual stays centred */
+  #architecture.x-sec .x-head{text-align:left;}
+  /* TaaS closing form: same layout as the Exchange sign-up, flush on the banner */
+  #final.x-sec{text-align:left;padding-bottom:0;}
+  #final.x-sec h2.ex-title{margin:0;max-width:none;}
+  #final.x-sec .lede{margin-top:28px;}
+  #final.x-sec .join-panel{margin-top:40px;padding-top:22px;}
+  #final.x-sec .enquiry-form{margin:0;max-width:none;}
+  /* About closing links: two panels flush on the banner */
+  #who.x-sec{padding-bottom:0;}
+  /* About page: tighter spacing between sections */
+  #different, #cases, #does, #architecture, #who{padding-top:min(10vh,90px);padding-bottom:min(10vh,90px);}
+  #different{padding-top:min(18vh,150px);}
+  /* TaaS page: same tighter section spacing as About */
+  #taas, #offerings, #mindset, #faq, #final{padding-top:min(10vh,90px);padding-bottom:min(10vh,90px);}
+  #taas{padding-top:min(18vh,150px);}
+  #final.x-sec{padding-bottom:0;}
+  #who.x-sec{padding-bottom:0;}
+  .x-more-row{display:grid;grid-template-columns:1fr 1fr;margin:48px -28px 0;}
+  .x-more-row .ideas-more{margin:0;}
+  @media (max-width:640px){.x-more-row{grid-template-columns:1fr;margin:36px -20px 0;}}
 
   /* architecture: solar system visual */
   #architecture{text-align:center;overflow:hidden;}
@@ -453,10 +511,15 @@
   @media (min-width:640px){
     .arch-label{width:150px;font-size:11.5px;}
   }
+  /* essence statements fill beige on hover / when selected, like the panels across the site */
+  .arch-label{transition:opacity .25s, border-color .25s, background-color .45s ease, color .45s ease;}
   .arch-label:hover, .arch-label.active{
-    border-color:var(--red);
-    background:rgba(20,8,6,0.85);
+    border-color:var(--beige);
+    background:var(--beige);
+    backdrop-filter:none;
+    opacity:1 !important;z-index:200 !important;
   }
+  .arch-label:hover .dot, .arch-label.active .dot{box-shadow:none;}
   .arch-label .dot{
     display:inline-block;width:6px;height:6px;border-radius:50%;
     margin-right:7px;vertical-align:middle;
@@ -471,9 +534,9 @@
     transition:border-color .25s, background .25s, text-shadow .25s;
   }
   .arch-purpose-tag:hover, .arch-purpose-tag.active{
-    border-color:var(--red);
-    background:rgba(20,8,6,0.55);
-    text-shadow:0 0 30px rgba(235,28,36,0.8);
+    border-color:var(--beige);
+    background:var(--beige);
+    text-shadow:none;
   }
   .arch-caption{
     margin-top:34px;min-height:104px;color:var(--ink);font-size:15px;max-width:520px;margin-left:auto;margin-right:auto;
@@ -523,7 +586,6 @@
   /* who is for: dynamic scrolling industries ticker (mixes GT Eesti bold + red Bodoni 72) */
   .industries-marquee{
     margin-top:56px;overflow:hidden;padding:30px 0;
-    border-top:1px solid var(--line);border-bottom:1px solid var(--line);
   }
   .industries-track{
     display:flex;align-items:baseline;gap:26px;width:max-content;white-space:nowrap;
@@ -562,14 +624,13 @@
   }
 
   /* ===== TaaS page: track-record impact grid (GT Eesti bold labels + red Bodoni 72 figures) ===== */
-  .impact-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);margin-top:56px;}
+  .impact-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:transparent;margin-top:56px;}
   @media (max-width:900px){.impact-grid{grid-template-columns:repeat(2,1fr);}}
   @media (max-width:600px){.impact-grid{grid-template-columns:1fr;}}
   .impact-card{
-    background:var(--black);padding:38px 30px;transition:background .3s;
+    background:transparent;padding:38px 30px;transition:background-color .45s ease;
     display:flex;flex-direction:column;gap:14px;
   }
-  .impact-card:hover{background:var(--panel);}
   .impact-figure{
     font-family:'Bodoni 72','Bodoni Moda','Bodoni MT',Georgia,serif;
     font-style:normal;color:var(--red);font-weight:500;font-size:clamp(24px,3vw,34px);line-height:1.15;
@@ -593,7 +654,7 @@
     position:relative;perspective:1800px;cursor:pointer;outline:none;
     min-height:var(--offer-h, 440px);
     display:flex;flex-direction:column;
-    border:1px solid var(--line);background:linear-gradient(180deg, rgba(235,28,36,0.04), transparent);
+    background:transparent;
   }
   /* flex:1 makes the inner (and its grid-stacked faces) fill the full card
      height even when the card is stretched taller than its content, so the
@@ -622,7 +683,7 @@
   .offer-front{justify-content:center;background:transparent;}
   .offer-back{
     transform:rotateY(180deg);justify-content:flex-start;
-    background:var(--black);
+    background:var(--beige);--ink:var(--black);
   }
   .offer-slide-head{display:flex;align-items:baseline;gap:14px;margin-bottom:16px;flex-wrap:wrap;}
   .offer-index{
@@ -684,14 +745,18 @@
   .case-tile{
     flex:0 0 auto;width:min(680px, 78vw);
     display:flex;flex-direction:column;justify-content:center;
-    border:1px solid var(--line);
-    background:linear-gradient(180deg, rgba(235,28,36,0.04), transparent);
+    background:transparent;
     padding:48px 52px;
     text-align:center;
     opacity:.35;transform:scale(.92);
     transition:opacity .5s ease, transform .5s ease;
   }
-  .case-tile.is-active{opacity:1;transform:scale(1);border-color:var(--red);}
+  .case-tile.is-active{opacity:1;transform:scale(1);}
+  /* beige panel on hover, like the home page panels (the centred, active case study) */
+  .case-tile{color:var(--ink);transition:opacity .5s ease, transform .5s ease, background-color .45s ease;}
+  @media (hover:hover){
+    .case-tile.is-active:hover{background-color:var(--beige);--ink:var(--black);}
+  }
   @media (max-width:700px){
     .case-tile{padding:44px 46px 32px;width:100%;max-width:100%;}
     .case-strip-wrap{gap:0;}
@@ -747,9 +812,8 @@
   .does-layout{display:block;margin-top:0;}
   .does-fade-stage{
     position:relative;
-    border-left:1px solid var(--line);
   }
-  @media (max-width:900px){.does-fade-stage{min-height:140px;border-left:none;border-top:1px solid var(--line);padding-top:36px;}}
+  @media (max-width:900px){.does-fade-stage{min-height:140px;padding-top:36px;}}
   .does-fade-word{
     position:absolute;left:44px;right:16px;
     font-family:'Bodoni 72','Bodoni Moda','Bodoni MT',Georgia,serif;font-weight:500;
@@ -767,8 +831,6 @@
 
 
   /* FAQ */
-  .faq-item{border-top:1px solid var(--line);}
-  .faq-item:last-child{border-bottom:1px solid var(--line);}
   .faq-q{
     width:100%;text-align:left;background:none;border:none;color:var(--red);
     display:flex;justify-content:space-between;align-items:center;gap:20px;
@@ -779,6 +841,11 @@
   .faq-item.open .plus{transform:rotate(45deg);}
   .faq-a{max-height:0;overflow:hidden;transition:max-height .35s ease;}
   .faq-a p{color:var(--ink);font-size:15px;padding:0 0 26px;max-width:680px;}
+  /* FAQ rows are panels: beige on hover (and while open), like the home page panels */
+  .faq-item{margin:0 -28px;padding:0 28px;color:var(--ink);background-color:transparent;transition:background-color .45s ease;}
+  @media (hover:hover){ .faq-item:hover{background-color:var(--beige);--ink:var(--black);} }
+  .faq-item.open{background-color:var(--beige);--ink:var(--black);}
+  @media (max-width:640px){ .faq-item{margin:0 -20px;padding:0 20px;} }
   /* THiNK wordmark reads fully red in the FAQ only (questions and answers),
      rather than its usual beige-with-red-i everywhere else on the site. */
   #faq .brand-logo{color:var(--red);}
@@ -786,7 +853,7 @@
   /* final CTA */
   #final{
     text-align:center;padding-top:min(22vh,180px);padding-bottom:min(16vh,140px);
-    background:radial-gradient(ellipse 70% 60% at 50% 100%, rgba(235,28,36,0.12), transparent 60%);
+    background:transparent;
   }
   #final h2{font-size:clamp(30px,5vw,58px);line-height:1.12;max-width:900px;margin:0 auto 18px;}
   #final .lede{margin-top:0;}
@@ -813,7 +880,8 @@
   }
   .home-hero{
     display:flex;flex-direction:column;align-items:flex-start;text-align:left;
-    padding:min(16vh,130px) 6vw 150px;max-width:1400px;margin:0 auto;
+    --hero-top:min(16vh,130px);
+    padding:var(--hero-top) 6vw 64px;max-width:1400px;margin:0 auto;
     position:relative;z-index:2;width:100%;
   }
   .hero-mark{
@@ -838,9 +906,14 @@
     max-width:520px;margin:6px 0 0;
   }
   .hero-flourish{
-    position:absolute;right:min(6vw,90px);bottom:min(6vh,60px);
-    width:min(220px,26vw);height:auto;opacity:.16;
+    /* right-hand side, top edge in line with the top of the title */
+    position:absolute;right:6vw;top:var(--hero-top, min(16vh,130px));bottom:auto;
+    width:min(220px,22vw);height:auto;opacity:.16;
     pointer-events:none;z-index:1;
+  }
+  @media (max-width:760px){
+    /* narrow screens: tuck it beside the button so it never sits on the title */
+    .hero-flourish{top:auto;bottom:56px;width:54px;}
   }
   .home-sub{
     font-family:'GT Eesti Display','Archivo',sans-serif;font-weight:700;text-transform:none;
@@ -883,7 +956,7 @@
     100%{opacity:0;transform:translateX(50%) translateY(-3px);}
   }
   @media (max-width:800px){
-    .home-hero{padding-bottom:130px;}
+    .home-hero{padding-bottom:56px;}
     .value-whisper{font-size:10px;}
   }
   @media (prefers-reduced-motion: reduce){
@@ -892,18 +965,14 @@
   
   .panels{
     display:grid;grid-template-columns:repeat(3,1fr);
-    border-top:1px solid var(--line);
   }
   @media (max-width:900px){.panels{grid-template-columns:1fr;}}
   .panel-btn{
     all:unset;cursor:pointer;text-align:left;box-sizing:border-box;
     display:flex;flex-direction:column;justify-content:space-between;
     min-height:min(62vh,620px);padding:56px 48px;position:relative;
-    border-right:1px solid var(--line);
-    background:rgba(5,4,3,0.28);transition:background .35s;
+    background:transparent;
   }
-  .panel-btn:last-child{border-right:none;}
-  .panel-btn:hover{background:rgba(18,16,15,0.88);}
   .panel-num{font-family:'GT Eesti Display','Archivo',sans-serif;font-size:13px;color:var(--red);font-weight:700;letter-spacing:.05em;}
   .panel-title{margin:26px 0 16px;line-height:1.05;display:flex;flex-direction:column;gap:8px;}
   .panel-lead{
@@ -943,9 +1012,29 @@
   }
   .panel-btn:hover .panel-arrow{transform:translateX(8px);}
   @media (max-width:900px){
-    .panel-btn{border-right:none;border-top:1px solid var(--line);min-height:340px;padding:44px 32px;}
-    .panel-btn:first-child{border-top:none;}
+    .panel-btn{min-height:340px;padding:44px 32px;}
   }
+
+  /* PAN-style hover: the panel under the cursor fills beige and its text flips to black (reverse of paneffect.co) */
+  .panel-btn{transition:background-color .45s ease;}
+  .panel-emphasis,.panel-taas-sup,.panel-sup{transition:color .45s ease;}
+  .panel-title::after{
+    content:"";display:block;height:2px;width:0;background:var(--red);
+    margin-top:6px;transition:width .45s cubic-bezier(.22,.61,.36,1);
+  }
+  @media (hover:hover){
+    .panel-btn:hover{background-color:var(--ink);}
+    .panel-btn:hover .panel-emphasis,
+    .panel-btn:hover .panel-taas-sup,
+    .panel-btn:hover .panel-sup,
+    .panel-btn:hover .panel-tag{color:var(--black);}
+    .panel-btn:hover .panel-title::after{width:64px;}
+  }
+  .panel-btn:focus-visible{background-color:var(--ink);}
+  .panel-btn:focus-visible .panel-emphasis,
+  .panel-btn:focus-visible .panel-taas-sup,
+  .panel-btn:focus-visible .panel-tag{color:var(--black);}
+  .panel-btn:focus-visible .panel-title::after{width:64px;}
 
   /* SITE-WIDE FOOTER: PAN-style flipping banner bordering a dark footer banner, no gap */
   .flip-banner{
@@ -954,7 +1043,7 @@
     display:block;margin:0;
   }
   .hero-who-cta{
-    margin:28px 0 0;
+    margin:4px 0 0;
   }
   .hero-who-cta .btn .brand-logo,
   .hero-who-cta .btn .brand-logo-i{
@@ -974,7 +1063,7 @@
     font-size:clamp(26px,5.6vw,60px);letter-spacing:.01em;
   }
   .flip-front{background:var(--red);color:var(--ink);}
-  .flip-back{background:var(--black);color:var(--red);transform:rotateX(180deg);}
+  .flip-back{background:transparent;color:var(--red);transform:rotateX(180deg);}
   @media (prefers-reduced-motion: reduce){.flip-inner{transition:none;}}
   @media (max-width:640px){
     .flip-face{font-size:clamp(14px,5vw,26px);letter-spacing:0;padding:0 20px;white-space:nowrap;}
@@ -985,7 +1074,7 @@
      matching the paneffect.co reference. */
   .site-footer{
     padding:0;margin:0;border-top:none;
-    background-color:var(--black);background-image:none;
+    background-color:transparent;background-image:none;
     position:relative;z-index:2;isolation:isolate;
     display:block;
   }
@@ -1067,11 +1156,11 @@
   }
   .audience-face{
     position:absolute;inset:0;backface-visibility:hidden;
-    border:1px solid var(--line);padding:40px 36px;
+    padding:40px 36px;
     display:flex;flex-direction:column;
   }
   .audience-front{
-    background:var(--panel);justify-content:center;gap:16px;
+    background:transparent;justify-content:center;gap:16px;
   }
   .audience-logo-title{
     font-size:26px;display:flex;align-items:baseline;flex-wrap:wrap;gap:0.22em;
@@ -1085,8 +1174,8 @@
     font-weight:500;font-size:1.05em;
   }
   .audience-back{
-    background:var(--black);transform:rotateY(180deg);
-    overflow-y:auto;gap:16px;border-color:var(--red);
+    background:var(--beige);--ink:var(--black);transform:rotateY(180deg);
+    overflow-y:auto;gap:16px;
   }
   .audience-tag{
     font-family:'GT Eesti Display','Archivo',sans-serif;font-weight:700;font-size:16px;
@@ -1116,6 +1205,44 @@
 
   /* ===== WAITLIST FORM ===== */
   .waitlist-form{max-width:640px;margin-top:50px;}
+  /* Exchange page: intro flows straight into the sign-up form, no section gap */
+  #exchange{padding-bottom:0;}
+  #waitlist{padding-top:80px;padding-bottom:0;}
+  #waitlist .waitlist-form{margin-top:0;}
+  #waitlist .join-panel{margin-top:28px;padding-top:22px;}
+  /* Join Us block: an invisible panel that fills beige on hover (and while someone is typing),
+     the same reversed PAN panel change as the home page. Negative margins keep its text
+     aligned with the intro copy above. */
+  /* --jp-bleed: how far the Join Us panel extends past the text column on each side;
+     never more than the page gutter, so the panel can't run off-screen */
+  :root{--jp-bleed:48px;--jp-width:832px;}
+  @media (max-width:1280px){:root{--jp-bleed:32px;}}
+  .join-panel{
+    margin:0 calc(-1 * var(--jp-bleed));padding:48px var(--jp-bleed);max-width:var(--jp-width);
+    background-color:transparent;color:var(--ink);transition:background-color .45s ease, color .45s ease;
+  }
+  .join-panel .waitlist-form{max-width:none;}
+  .join-panel:hover, .join-panel:focus-within{background-color:var(--beige);--ink:var(--black);}
+  .join-panel:hover .btn-primary, .join-panel:focus-within .btn-primary{color:var(--beige);}
+  .join-panel:hover .btn-primary:hover, .join-panel:focus-within .btn-primary:hover{background:var(--black);color:var(--beige);}
+  .join-panel .field input, .join-panel .field textarea{transition:border-color .25s, background-color .45s ease, color .45s ease;}
+  .join-panel:hover .field input, .join-panel:focus-within .field input{border-bottom-color:rgba(10,10,9,0.25);}
+  /* inside the beige panel the field you're typing in flips the other way: black with beige text */
+  .join-panel .field input:focus, .join-panel .field textarea:focus{background-color:var(--black);color:var(--beige);border-color:var(--red);}
+  .join-panel .field input:-webkit-autofill:focus{-webkit-text-fill-color:var(--beige);box-shadow:0 0 0 1000px var(--black) inset;}
+  @media (max-width:640px){:root{--jp-bleed:20px;}.join-panel{padding:36px var(--jp-bleed);}}
+  /* intro copy runs exactly as wide as the Join Us panel: same left edge as the text, same right edge as the panel */
+  #exchange .s-head{max-width:none;}
+  /* Exchange title block (PAN panel style): big spaced caps, red rule, then the tagline */
+  /* same font, size and spacing as the other section titles; only adds the red rule under the word */
+  .s-head h2.ex-title{width:fit-content;}
+  .ex-title::after{content:"";display:block;width:100%;height:4px;background:var(--red);margin-top:24px;}
+  .ex-tagline{
+    font-family:'Inter',sans-serif;font-weight:700;
+    color:var(--ink);font-size:clamp(20px,2.4vw,28px);line-height:1.3;margin-top:26px;
+  }
+  #exchange .ex-tagline + .lede{margin-top:28px;}
+  #exchange .lede{max-width:calc(var(--jp-width) - var(--jp-bleed));}
   .form-row{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
   @media (max-width:640px){.form-row{grid-template-columns:1fr;}}
   .field{margin-top:26px;display:flex;flex-direction:column;gap:10px;}
@@ -1128,10 +1255,21 @@
   .field input[type="tel"],
   .field textarea{
     background:transparent;border:none;border-bottom:1px solid var(--line);
-    color:var(--ink);font-family:'Inter',sans-serif;font-size:16px;padding:12px 2px;
-    transition:border-color .25s;width:100%;
+    color:var(--ink);font-family:'Inter',sans-serif;font-size:16px;padding:12px 14px;
+    transition:border-color .25s, background-color .45s ease, color .45s ease;width:100%;
+    caret-color:var(--red);
   }
   .field input:focus, .field textarea:focus{outline:none;border-color:var(--red);}
+  /* reversed PAN panel state: the field you're typing in fills beige with black text */
+  .field input:focus, .field textarea:focus{background-color:var(--beige);color:var(--black);}
+  /* keep browser autofill from painting its own white/yellow box */
+  .field input:-webkit-autofill{
+    -webkit-text-fill-color:var(--ink);box-shadow:0 0 0 1000px var(--black) inset;
+    transition:background-color 9999s ease 0s;
+  }
+  .field input:-webkit-autofill:focus{
+    -webkit-text-fill-color:var(--black);box-shadow:0 0 0 1000px var(--beige) inset;
+  }
   .field textarea{resize:vertical;min-height:88px;font-family:'Inter',sans-serif;line-height:1.5;}
 
   .radio-row{display:flex;flex-wrap:wrap;gap:12px;margin-top:2px;}
@@ -1148,7 +1286,7 @@
   .form-note{margin-top:16px;color:var(--ink);font-size:13px;max-width:480px;line-height:1.6;}
 
   .form-success{
-    max-width:640px;margin-top:50px;padding:42px 40px;border:1px solid var(--line);
+    max-width:640px;margin-top:50px;padding:42px 40px;
   }
   .form-success h3{font-size:24px;margin-bottom:12px;}
   .form-success p{color:var(--ink);font-size:15px;}
@@ -1177,21 +1315,22 @@
   <div class="overlay-foot"><span class="brand-logo">TH<span class="brand-logo-i">i</span>NK</span>, powered by <a href="https://paneffect.co/" target="_blank" rel="noopener noreferrer">PAN</a></div>
 </div>
 <div class="view active" id="view-about">
-<section id="different">
+<section id="different" class="x-sec">
   <div class="wrap">
-    <span class="num">01 / Why THiNK is Different</span>
-    <div class="s-head reveal">
-      <h2>Built by <em>operators</em>,<br>for operators<span class="stop">.</span></h2>
+    <div class="s-head x-head reveal">
+      <h2 class="ex-title">Who is <span class="brand-logo">TH<span class="brand-logo-i">i</span>NK</span></h2>
+      <p class="ex-tagline">Built by operators, for operators.</p>
       <p class="lede"><strong class="brand-logo">TH<span class="brand-logo-i">i</span>NK</strong> is powered by PAN, a group built by operators with direct experience across business transformation, turnarounds, investment, innovation, start ups, operating performance and high-performance environments.</p>
     </div>
   </div>
 </section>
 
-<section id="cases">
+<section id="cases" class="x-sec">
   <div class="wrap">
-    <span class="num">02 / Case Studies</span>
-    <div class="s-head reveal">
-      <h2>How <strong class="brand-logo">TH<span class="brand-logo-i">i</span>NK</strong> has <em>empowered</em> high performance<span class="stop">.</span></h2>
+    <div class="s-head x-head reveal">
+      <h2 class="ex-title">Case studies</h2>
+      <p class="ex-tagline">How <span class="brand-logo">TH<span class="brand-logo-i">i</span>NK</span> has empowered high performance.</p>
+      <p class="lede">We bring commercial judgement, thoughtful questions, performance discipline and a practical understanding of what it takes to move a business from potential to improved performance. We are not interested in strategy that sits outside the operating reality of the business. We are interested in the thinking that changes what the business does next.</p>
     </div>
 
     <div class="case-strip-wrap reveal" id="caseStripWrap">
@@ -1203,10 +1342,10 @@
               <span class="case-index">01</span>
               <h3 class="case-title">Global Beverage Company</h3>
             </div>
-            <p class="case-context">A high-pressure business transformation involving significant debt, operating complexity and the need to restore performance. The business was carrying over $700 million in debt before being turned around and ultimately sold for $1.5 billion.</p>
+            <p class="case-context">A high-pressure business transformation involving significant operational complexity and over $700 million in debt, before being turned around and ultimately sold for $1.5 billion.</p>
             <div class="case-relevance">
               <span class="case-relevance-label"><strong class="brand-logo">TH<span class="brand-logo-i">i</span>NK</strong> Relevance</span>
-              <p>This business reflects the kind of thinking <strong class="brand-logo">TH<span class="brand-logo-i">i</span>NK</strong> brings to businesses under pressure: clarity on the current reality, sharper priorities, disciplined execution and the ability to convert constraint into commercial momentum.</p>
+              <p>This business case reflects <strong class="brand-logo">TH<span class="brand-logo-i">i</span>NK</strong>&rsquo;s approach to driving operating performance under pressure through focus and disciplined execution.</p>
             </div>
           </div>
           <div class="case-tile" data-index="1">
@@ -1217,7 +1356,7 @@
             <p class="case-context">A fast-moving consumer goods turnaround where the business was carrying more than $700 million in debt when <strong class="brand-logo">TH<span class="brand-logo-i">i</span>NK</strong> became involved. The work focused on improving performance, stabilising the operating position and creating a path toward a successful $160 million sale.</p>
             <div class="case-relevance">
               <span class="case-relevance-label"><strong class="brand-logo">TH<span class="brand-logo-i">i</span>NK</strong> Relevance</span>
-              <p><strong class="brand-logo">TH<span class="brand-logo-i">i</span>NK</strong>&rsquo;s ability to work through complexity, identify the issues that matter, and help businesses move from pressure to a clearer performance pathway.</p>
+              <p><strong class="brand-logo">TH<span class="brand-logo-i">i</span>NK</strong>&rsquo;s ability to identify critical financial and operational challenges and help businesses navigate pressure towards a clearer pathway to improved performance.</p>
             </div>
           </div>
           <div class="case-tile" data-index="2">
@@ -1228,7 +1367,7 @@
             <p class="case-context">A professional sporting environment requiring financial reset, cultural change and performance improvement. The broader transformation included the establishment of a future fund, improved profitability, repeated finals appearances and championship.</p>
             <div class="case-relevance">
               <span class="case-relevance-label"><strong class="brand-logo">TH<span class="brand-logo-i">i</span>NK</strong> Relevance</span>
-              <p>This case reflects a core <strong class="brand-logo">TH<span class="brand-logo-i">i</span>NK</strong> belief: high performance is created through the environment around people.</p>
+              <p>This case reflects a core <strong class="brand-logo">TH<span class="brand-logo-i">i</span>NK</strong> belief, that high performance is created through the environment around people.</p>
             </div>
           </div>
           <div class="case-tile" data-index="3">
@@ -1277,17 +1416,15 @@
       <button class="case-dot" data-index="5" aria-label="Show Innovative Health Start Up" type="button"></button>
     </div>
 
-    <p class="case-outro reveal">This experience shapes how we work and how we think about business. We bring commercial judgement, thoughtful questions, performance discipline and a practical understanding of what it takes to move a business from potential to improved performance.</p>
-    <p class="case-outro reveal">We are not interested in strategy that sits outside the operating reality of the business. We are interested in the thinking that changes what the business does next.</p>
   </div>
 </section>
 
-<section id="does">
+<section id="does" class="x-sec">
   <div class="wrap">
-    <span class="num">03 / What THiNK Does</span>
     <div class="does-layout">
-      <div class="s-head reveal">
-        <h2>Empowering from the <em>inside-out</em><span class="stop">.</span></h2>
+      <div class="s-head x-head reveal">
+        <h2 class="ex-title">What <span class="brand-logo">TH<span class="brand-logo-i">i</span>NK</span> does</h2>
+        <p class="ex-tagline">Empowering from the inside-out.</p>
         <p class="lede"><strong class="brand-logo">TH<span class="brand-logo-i">i</span>NK</strong> helps businesses build the thinking capability required to perform at a higher level.</p>
         <p class="bio-copy">Our approach is to empower from the inside out. We do not arrive with a predetermined answer. We ask the questions that help people inside the organisation examine the business differently.</p>
         <p class="bio-copy">Leaders understand the market, the customer, the team and the operating model. The challenge is that insight can become fragmented across the organisation, shaped by existing assumptions or lost in the pressure of day-to-day execution.</p>
@@ -1298,12 +1435,11 @@
   </div>
 </section>
 
-<section id="architecture">
+<section id="architecture" class="x-sec">
   <div class="wrap">
-    <span class="num">04 / The THiNK Architecture</span>
-    <div class="s-head reveal" style="margin:0 auto;">
-      <h2>The <span class="brand-logo">TH<span class="brand-logo-i">i</span>NK</span><br><em class="cap">Architecture</em><span class="stop">.</span></h2>
-      <p class="lede" style="margin-left:auto;margin-right:auto;">At the centre of our work is the <strong class="brand-logo">TH<span class="brand-logo-i">i</span>NK</strong> Architecture, a mental model for high performance. It gives leaders the scaffolding to navigate uncertainty, challenge assumptions, build depth of thought and move from insight to disciplined execution.</p>
+    <div class="s-head x-head reveal">
+      <h2 class="ex-title">The <span class="brand-logo">TH<span class="brand-logo-i">i</span>NK</span> Architecture</h2>
+      <p class="lede">At the centre of our work is the <strong class="brand-logo">TH<span class="brand-logo-i">i</span>NK</strong> Architecture, a mental model for high performance. It gives leaders the scaffolding to navigate uncertainty, challenge assumptions, build depth of thought and move from insight to disciplined execution.</p>
     </div>
     <div class="arch-stage reveal" id="archStage">
       <canvas id="archCanvas"></canvas>
@@ -1311,16 +1447,15 @@
       <div class="arch-purpose-tag">Purpose</div>
     </div>
     <p class="arch-caption reveal" id="archCaption">Select an essence to learn more about the <strong class="brand-logo">TH<span class="brand-logo-i">i</span>NK</strong> Architecture.</p>
-    <p class="arch-hint reveal">Hover or tap a node to explore</p>
   </div>
 </section>
 
 
-<section id="who">
+<section id="who" class="x-sec">
   <div class="wrap">
-    <span class="num">05 / Who THiNK Works With</span>
-    <div class="s-head reveal">
-      <h2>Ambitious businesses, across every <em>industry</em><span class="stop">.</span></h2>
+    <div class="s-head x-head reveal">
+      <h2 class="ex-title">Who <span class="brand-logo">TH<span class="brand-logo-i">i</span>NK</span> works with</h2>
+      <p class="ex-tagline">Ambitious businesses, across every industry.</p>
       <p class="lede"><strong class="brand-logo">TH<span class="brand-logo-i">i</span>NK</strong> works with ambitious businesses across a range of industries. The operating context may differ, but the underlying performance challenges are often familiar: a lack of prioritisation, inconsistent decision-making, misalignment and difficulty translating strategy into action.</p>
       <p class="bio-copy"><strong class="brand-logo">TH<span class="brand-logo-i">i</span>NK</strong> is most valuable when a business has strong potential but needs greater clarity around its direction and more discipline in execution to convert that potential into performance.</p>
     </div>
@@ -1352,9 +1487,9 @@
         <span class="ind">Therapeutics</span><span class="ind-sep">/</span>
       </div>
     </div>
-    <div class="cta-row reveal" style="margin-top:48px;">
-      <a href="https://paneffect.co/people/" target="_blank" rel="noopener noreferrer" class="btn btn-primary"><span>Meet the team</span></a>
-      <a href="taas.html#final" class="btn btn-primary"><span>Work with THiNK</span></a>
+    <div class="x-more-row reveal">
+      <a class="ideas-more" href="https://paneffect.co/people/" target="_blank" rel="noopener noreferrer">Meet the team <span class="ideas-more-arrow">&rarr;</span></a>
+      <a class="ideas-more" href="taas.html#final">Work with <strong class="brand-logo">TH<span class="brand-logo-i">i</span>NK</strong> <span class="ideas-more-arrow">&rarr;</span></a>
     </div>
   </div>
 </section>
@@ -2202,7 +2337,7 @@
         el.className = 'arch-label';
         el.dataset.i = i;
         el.style.color = p.color;
-        el.innerHTML = '<span class="dot" style="background:'+p.color+';color:'+p.color+'"></span>'+p.title;
+        el.innerHTML = p.title;
         el.addEventListener('click', () => setActive(i));
         el.addEventListener('mouseenter', () => { hoverIndex = i; speedMulTarget = 0.35; });
         el.addEventListener('mouseleave', () => { hoverIndex = null; if(activeIndex===null && !purposeActive) speedMulTarget = 1; });
@@ -2347,14 +2482,7 @@
         ctx.beginPath(); ctx.arc(s.x*W, s.y*H, s.r, 0, Math.PI*2); ctx.fill();
       });
 
-      // orbit paths, each on its own tilted plane
-      planets.forEach(p => {
-        ctx.beginPath();
-        ctx.ellipse(cx, cy, p.rx*R, p.ry*R, p.tilt, 0, Math.PI*2);
-        ctx.strokeStyle = RING_COLOR;
-        ctx.lineWidth = 1;
-        ctx.stroke();
-      });
+      // orbit paths are no longer drawn: the essences move on invisible orbits
 
       // advance planets along their own tilted orbital plane
       planets.forEach(p => {
@@ -2444,7 +2572,7 @@
 
     // deep, slow-breathing ember pools low in the composition
     const embers = [];
-    const emberCount = 8;
+    const emberCount = 0; // red glow pools removed: background stays flat black
     for(let i=0;i<emberCount;i++){
       embers.push({
         x: Math.random(),
@@ -2457,27 +2585,44 @@
       });
     }
 
-    // rising spark particles, like embers thrown up from a fire
+    // fire sparks: fast, motion-blurred red streaks thrown up from a fire, drawn at different depths
+    // (far = small and sharp, near = larger and out of focus), echoing the PAN site's flying-ember footage
     const sparks = [];
-    const sparkCount = 90;
-    function spawnSpark(atBottom){
+    const sparkCount = 46;
+    function spawnSpark(initial){
+      const depth = Math.random(); // 0 far .. 1 near
+      const speed = (80 + Math.random()*200) * (0.6 + depth*0.9); // px per second
+      const ang = -Math.PI/2 + (Math.random()-0.5)*1.4; // mostly upward, fanned out like an updraft
       return {
-        x: Math.random(),
-        y: atBottom ? 1 + Math.random()*0.1 : Math.random(),
-        r: 1.0 + Math.random()*2.3,
-        vy: 0.045 + Math.random()*0.09,
-        wob: Math.random()*Math.PI*2,
-        wobSpeed: 0.5 + Math.random()*1.2,
-        wobAmp: 0.004 + Math.random()*0.01,
+        x: Math.random()*W,
+        y: initial ? Math.random()*H : H + 10 + Math.random()*80,
+        vx: Math.cos(ang)*speed, vy: Math.sin(ang)*speed,
+        depth: depth,
+        width: 0.7 + depth*2.2,
         turbSeed: Math.random()*1000,
-        turbSpeed: 0.6 + Math.random()*1.1,
-        driftAmp: 0.012 + Math.random()*0.022,
+        turbSpeed: 0.8 + Math.random()*1.4,
         life: 0,
-        maxLife: 5 + Math.random()*7,
+        maxLife: 1.8 + Math.random()*3.4,
         flicker: Math.random()*Math.PI*2
       };
     }
-    for(let i=0;i<sparkCount;i++) sparks.push(spawnSpark(false));
+    for(let i=0;i<sparkCount;i++) sparks.push(spawnSpark(true));
+
+    // draws one spark as a streak along its direction of travel: a hot head with a tail that fades to nothing
+    function drawStreak(x, y, vx, vy, width, alpha){
+      const sp = Math.sqrt(vx*vx+vy*vy) || 1;
+      const len = Math.min(46, 4 + sp*0.07);
+      const tx = x - vx/sp*len, ty = y - vy/sp*len;
+      const g = ctx.createLinearGradient(tx,ty,x,y);
+      g.addColorStop(0, 'rgba(235,28,36,0)');
+      g.addColorStop(0.6, 'rgba(235,28,36,'+(alpha*0.7).toFixed(3)+')');
+      g.addColorStop(1, 'rgba(255,110,80,'+alpha.toFixed(3)+')');
+      ctx.strokeStyle = g;
+      ctx.lineCap = 'round';
+      ctx.beginPath(); ctx.moveTo(tx,ty); ctx.lineTo(x,y);
+      ctx.globalAlpha = 0.3; ctx.lineWidth = width*3.2; ctx.stroke(); // soft glow
+      ctx.globalAlpha = 1;   ctx.lineWidth = width;     ctx.stroke(); // bright core
+    }
 
     // mouse-reactive embers: a warm glow follows the cursor, stirring up hotter sparks nearby
     const mouse = { x: 0.5, y: 0.5, lastMove: -99999 };
@@ -2488,20 +2633,18 @@
     }, {passive:true});
 
     const mouseSparks = [];
-    const maxMouseSparks = 50;
-    function spawnMouseSpark(nx, ny){
+    const maxMouseSparks = 14;
+    function spawnMouseSpark(px, py){
+      const speed = 60 + Math.random()*120;
+      const ang = -Math.PI/2 + (Math.random()-0.5)*1.6;
       return {
-        x: nx, y: ny,
-        r: 1.3 + Math.random()*2.1,
-        vy: 0.09 + Math.random()*0.15,
-        wob: Math.random()*Math.PI*2,
-        wobSpeed: 0.8 + Math.random()*1.6,
-        wobAmp: 0.006 + Math.random()*0.014,
+        x: px, y: py,
+        vx: Math.cos(ang)*speed, vy: Math.sin(ang)*speed,
+        width: 0.6 + Math.random()*0.9,
         turbSeed: Math.random()*1000,
         turbSpeed: 0.8 + Math.random()*1.3,
-        driftAmp: 0.015 + Math.random()*0.025,
         life: 0,
-        maxLife: 1.5 + Math.random()*1.6,
+        maxLife: 0.8 + Math.random()*1.0,
         flicker: Math.random()*Math.PI*2
       };
     }
@@ -2523,7 +2666,7 @@
       const t = now/1000;
 
       // dark base fill so the layer reads correctly even before/without particles
-      ctx.fillStyle = '#050403';
+      ctx.fillStyle = '#0a0a09';
       ctx.fillRect(0,0,W,H);
 
       // mouse presence: fades out ~1.2s after the cursor stops moving
@@ -2549,7 +2692,7 @@
 
       // soft warm glow that follows the cursor, like embers glowing hotter where you linger
       if(mouseInfluence > 0.01){
-        const a = 0.12*mouseInfluence;
+        const a = 0.035*mouseInfluence;
         const g = ctx.createRadialGradient(mx,my,0,mx,my,proximityR);
         g.addColorStop(0, 'rgba(255,130,95,'+a.toFixed(3)+')');
         g.addColorStop(0.5, 'rgba(235,28,36,'+(a*0.55).toFixed(3)+')');
@@ -2560,87 +2703,57 @@
         ctx.fill();
       }
 
-      // stir up a few hotter sparks right where the cursor moves
-      if(mouseInfluence > 0.05 && mouseSparks.length < maxMouseSparks && Math.random() < 0.35){
+      // stir up a few faint sparks right where the cursor moves
+      if(mouseInfluence > 0.05 && mouseSparks.length < maxMouseSparks && Math.random() < 0.1){
         mouseSparks.push(spawnMouseSpark(
-          mouse.x + (Math.random()-0.5)*0.018,
-          mouse.y + (Math.random()-0.5)*0.018
+          mx + (Math.random()-0.5)*20,
+          my + (Math.random()-0.5)*20
         ));
       }
 
-      // rising sparks: unpredictable, turbulent movement — like embers caught in fire updrafts,
-      // alternating between quick rises and brief floaty pauses rather than a steady climb.
-      // sparks that drift near the cursor burn brighter and larger.
-      sparks.forEach(s => {
-        s.life += dt*motionScale;
-        const speedNoise = noise(t*s.turbSpeed, s.turbSeed);
-        const speedMul = Math.max(0.2, 1 + speedNoise*1.1); // ranges roughly 0.2x - 2.1x, non-linear
-        s.y -= s.vy*speedMul*dt*motionScale;
-        s.wob += s.wobSpeed*dt*motionScale;
-        const driftNoise = noise(t*s.turbSpeed*0.7, s.turbSeed+50);
-        const x = (s.x + Math.sin(s.wob)*s.wobAmp + driftNoise*s.driftAmp) * W;
-        const y = s.y * H;
+      // moves a spark through a turbulent updraft: sideways gusts, a little lift, light drag
+      function stepSpark(s){
+        const step = dt*motionScale;
+        s.life += step;
+        s.vx += noise(t*s.turbSpeed, s.turbSeed)*240*step;
+        s.vy += (noise(t*s.turbSpeed*0.8, s.turbSeed+40)*110 - 25)*step;
+        const drag = Math.pow(0.82, step);
+        s.vx *= drag; s.vy *= drag;
+        s.x += s.vx*step; s.y += s.vy*step;
+      }
+
+      sparks.forEach((s, i) => {
+        stepSpark(s);
         const lifeRatio = s.life / s.maxLife;
-        const fadeIn = Math.min(1, s.life*3);
-        const fadeOut = Math.max(0, 1 - lifeRatio);
-        const tw = 0.6 + 0.4*Math.sin(t*5 + s.flicker);
-        let alpha = 0.65 * fadeIn * fadeOut * tw;
-        let radius = s.r*3;
+        const fadeIn = Math.min(1, s.life*4);
+        const fadeOut = lifeRatio > 0.65 ? Math.max(0, (1 - lifeRatio)/0.35) : 1;
+        const tw = 0.65 + 0.35*Math.sin(t*7 + s.flicker);
+        // near sparks read as out of focus: wider and softer
+        const focus = s.depth > 0.78 ? 0.45 : (0.55 + s.depth*0.45);
+        let alpha = 0.6 * focus * fadeIn * fadeOut * tw;
+        let width = s.depth > 0.78 ? s.width*1.6 : s.width;
         if(mouseInfluence > 0.01){
-          const dx = x-mx, dy = y-my;
-          const dist = Math.sqrt(dx*dx+dy*dy);
-          const proximity = mouseInfluence * Math.max(0, 1 - dist/proximityR);
-          if(proximity > 0){
-            alpha = Math.min(1, alpha*(1+proximity*1.2));
-            radius = radius*(1+proximity*0.5);
-          }
+          const dx = s.x-mx, dy = s.y-my;
+          const proximity = mouseInfluence * Math.max(0, 1 - Math.sqrt(dx*dx+dy*dy)/proximityR);
+          if(proximity > 0) alpha = Math.min(1, alpha*(1+proximity*0.3));
         }
-        if(alpha > 0.01){
-          const g = ctx.createRadialGradient(x,y,0,x,y,radius);
-          g.addColorStop(0, 'rgba(255,150,120,'+alpha.toFixed(3)+')');
-          g.addColorStop(0.4, 'rgba(235,28,36,'+(alpha*0.7).toFixed(3)+')');
-          g.addColorStop(1, 'rgba(235,28,36,0)');
-          ctx.fillStyle = g;
-          ctx.beginPath();
-          ctx.arc(x,y,radius,0,Math.PI*2);
-          ctx.fill();
-        }
-        if(s.y < -0.05 || s.life > s.maxLife){
-          const idx = sparks.indexOf(s);
-          sparks[idx] = spawnSpark(true);
+        if(alpha > 0.01) drawStreak(s.x, s.y, s.vx, s.vy, width, alpha);
+        if(s.y < -60 || s.x < -60 || s.x > W+60 || s.life > s.maxLife){
+          sparks[i] = spawnSpark(false);
         }
       });
 
-      // hot cursor-trail sparks: brighter, quicker fade, dissipate like disturbed embers
+      // faint cursor sparks: short-lived streaks that flick up and vanish
       for(let i=mouseSparks.length-1;i>=0;i--){
         const s = mouseSparks[i];
-        s.life += dt*motionScale;
-        const speedNoise = noise(t*s.turbSpeed, s.turbSeed);
-        const speedMul = Math.max(0.2, 1 + speedNoise*1.1);
-        s.y -= s.vy*speedMul*dt*motionScale;
-        s.wob += s.wobSpeed*dt*motionScale;
-        const driftNoise = noise(t*s.turbSpeed*0.7, s.turbSeed+50);
-        const x = (s.x + Math.sin(s.wob)*s.wobAmp + driftNoise*s.driftAmp) * W;
-        const y = s.y * H;
+        stepSpark(s);
         const lifeRatio = s.life / s.maxLife;
         const fadeIn = Math.min(1, s.life*6);
         const fadeOut = Math.max(0, 1 - lifeRatio);
-        const tw = 0.7 + 0.3*Math.sin(t*6 + s.flicker);
-        const alpha = fadeIn * fadeOut * tw * 0.65;
-        if(alpha > 0.01){
-          const radius = s.r*2.7;
-          const g = ctx.createRadialGradient(x,y,0,x,y,radius);
-          g.addColorStop(0, 'rgba(255,185,145,'+alpha.toFixed(3)+')');
-          g.addColorStop(0.4, 'rgba(255,60,40,'+(alpha*0.75).toFixed(3)+')');
-          g.addColorStop(1, 'rgba(235,28,36,0)');
-          ctx.fillStyle = g;
-          ctx.beginPath();
-          ctx.arc(x,y,radius,0,Math.PI*2);
-          ctx.fill();
-        }
-        if(s.y < -0.05 || s.life > s.maxLife){
-          mouseSparks.splice(i,1);
-        }
+        const tw = 0.7 + 0.3*Math.sin(t*8 + s.flicker);
+        const alpha = fadeIn * fadeOut * tw * 0.28;
+        if(alpha > 0.01) drawStreak(s.x, s.y, s.vx, s.vy, s.width, alpha);
+        if(s.life > s.maxLife) mouseSparks.splice(i,1);
       }
 
       requestAnimationFrame(frame);
