@@ -455,6 +455,24 @@
   .x-more-row .ideas-more{margin:0;}
   @media (max-width:640px){.x-more-row{grid-template-columns:1fr;margin:36px -20px 0;}}
 
+  /* Touch screens: the panel crossing the middle of the screen while scrolling ('is-lit',
+     set by script) gets the same beige state as a mouse hover on desktop */
+  @media (hover:none){
+    .panel-btn.is-lit{background-color:var(--ink);}
+    .panel-btn.is-lit .panel-emphasis,
+    .panel-btn.is-lit .panel-taas-sup,
+    .panel-btn.is-lit .panel-sup,
+    .panel-btn.is-lit .panel-tag{color:var(--black);}
+    .panel-btn.is-lit .panel-title::after{width:64px;}
+    .feed-item.is-lit, .pillar.is-lit, .help-card.is-lit, .faq-item.is-lit,
+    .ideas-more.is-lit, .case-tile.is-active.is-lit, .join-panel.is-lit{
+      background-color:var(--beige);--ink:var(--black);
+    }
+    .ideas-more.is-lit .ideas-more-arrow{transform:translateX(8px);}
+    .join-panel.is-lit .btn-primary{color:var(--beige);}
+    .join-panel.is-lit .field input, .join-panel.is-lit .ideas-subscribe-input{border-bottom-color:rgba(10,10,9,0.25);}
+  }
+
   /* architecture: solar system visual */
   #architecture{text-align:center;overflow:hidden;}
   .arch-stage{

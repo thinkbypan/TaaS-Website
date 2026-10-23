@@ -470,6 +470,24 @@
   .x-more-row .ideas-more{margin:0;}
   @media (max-width:640px){.x-more-row{grid-template-columns:1fr;margin:36px -20px 0;}}
 
+  /* Touch screens: the panel crossing the middle of the screen while scrolling ('is-lit',
+     set by script) gets the same beige state as a mouse hover on desktop */
+  @media (hover:none){
+    .panel-btn.is-lit{background-color:var(--ink);}
+    .panel-btn.is-lit .panel-emphasis,
+    .panel-btn.is-lit .panel-taas-sup,
+    .panel-btn.is-lit .panel-sup,
+    .panel-btn.is-lit .panel-tag{color:var(--black);}
+    .panel-btn.is-lit .panel-title::after{width:64px;}
+    .feed-item.is-lit, .pillar.is-lit, .help-card.is-lit, .faq-item.is-lit,
+    .ideas-more.is-lit, .case-tile.is-active.is-lit, .join-panel.is-lit{
+      background-color:var(--beige);--ink:var(--black);
+    }
+    .ideas-more.is-lit .ideas-more-arrow{transform:translateX(8px);}
+    .join-panel.is-lit .btn-primary{color:var(--beige);}
+    .join-panel.is-lit .field input, .join-panel.is-lit .ideas-subscribe-input{border-bottom-color:rgba(10,10,9,0.25);}
+  }
+
   /* architecture: solar system visual */
   #architecture{text-align:center;overflow:hidden;}
   .arch-stage{
@@ -1762,7 +1780,8 @@
     // so fall back to the Netlify Function directly (it sends a CORS header).
     const NETLIFY_FEED = 'https://thinkbypan.netlify.app/substack-feed';
     const FETCH_TIMEOUT_MS = 8000;
-    const CACHE_KEY = 'think_substack_feed_v1';
+    // v2: drops any stale v1 cache phones may still be holding
+    const CACHE_KEY = 'think_substack_feed_v2';
     const CACHE_TTL_MS = 30 * 60 * 1000;
 
     function stripHtml(html){
@@ -1822,7 +1841,12 @@
     function renderFallback(el, message){
       el.innerHTML = '<p class="feed-status">' + message + '</p>';
     }
+    function byNewest(items){
+      // always newest first, whatever order the feed or a proxy returns
+      return items.slice().sort((a, b) => (new Date(b.pubDate).getTime() || 0) - (new Date(a.pubDate).getTime() || 0));
+    }
     function applyFeed(items){
+      items = byNewest(items);
       const podcasts = items.filter(isPodcastItem).slice(0, 3);
       const articles = items.filter(i => !isPodcastItem(i)).slice(0, 3);
 
@@ -1849,18 +1873,21 @@
       catch(err){ /* storage full or unavailable — non-fatal */ }
     }
 
+    // Show any cached posts straight away, but ALWAYS fetch the live feed as well, so a
+    // phone never keeps showing an older set of posts (mobile browsers hold on to caches).
     const cachedItems = loadFromCache();
-    if(cachedItems){
-      applyFeed(cachedItems);
-      return;
-    }
+    if(cachedItems) applyFeed(cachedItems);
 
     // Every request gets a timeout, so a proxy that hangs can never leave the
     // lists stuck on "Loading…" — it just falls through to the next source.
     function fetchWithTimeout(url){
       const ctrl = (typeof AbortController !== 'undefined') ? new AbortController() : null;
       const timer = ctrl ? setTimeout(() => ctrl.abort(), FETCH_TIMEOUT_MS) : null;
-      return fetch(url, ctrl ? { signal: ctrl.signal } : undefined)
+      // cache-busting query + no-store so mobile browsers can't serve an old copy of the feed
+      const fresh = url + (url.indexOf('?') === -1 ? '?' : '&') + '_=' + Date.now();
+      const opts = { cache: 'no-store' };
+      if(ctrl) opts.signal = ctrl.signal;
+      return fetch(fresh, opts)
         .finally(() => { if(timer) clearTimeout(timer); });
     }
     // 1st choice: the site's own Netlify proxy (see netlify.toml).
@@ -1895,6 +1922,7 @@
         saveToCache(items);
       })
       .catch(() => {
+        if(cachedItems) return; // live fetch failed: keep showing the cached posts
         const msg = 'The latest posts are on THiNK Media. <a href="https://thinkbypan.substack.com" target="_blank" rel="noopener noreferrer">Read on Substack &rarr;</a>';
         renderFallback(articlesEl, msg);
         renderFallback(podcastEl, msg);
@@ -2575,14 +2603,7 @@
         ctx.beginPath(); ctx.arc(s.x*W, s.y*H, s.r, 0, Math.PI*2); ctx.fill();
       });
 
-      // orbit paths, each on its own tilted plane
-      planets.forEach(p => {
-        ctx.beginPath();
-        ctx.ellipse(cx, cy, p.rx*R, p.ry*R, p.tilt, 0, Math.PI*2);
-        ctx.strokeStyle = RING_COLOR;
-        ctx.lineWidth = 1;
-        ctx.stroke();
-      });
+      // orbit paths are no longer drawn: the essences move on invisible orbits
 
       // advance planets along their own tilted orbital plane
       planets.forEach(p => {
@@ -2859,6 +2880,39 @@
       requestAnimationFrame(frame);
     }
     requestAnimationFrame(frame);
+  })();
+
+
+  // ===== Touch screens: scrolling lights up panels =====
+  // Phones and tablets have no hover, so whichever panel sits across the middle of the
+  // screen gets the same beige state the mouse gives on a computer.
+  (function(){
+    if(!window.matchMedia) return;
+    var touchQuery = window.matchMedia('(hover: none)');
+    var SELECTOR = '.panel-btn, .feed-item, .pillar, .help-card, .faq-item, .ideas-more, .case-tile, .join-panel';
+    var ticking = false;
+    function update(){
+      ticking = false;
+      var nodes = document.querySelectorAll(SELECTOR);
+      if(!touchQuery.matches){
+        for(var j=0;j<nodes.length;j++) nodes[j].classList.remove('is-lit');
+        return;
+      }
+      var line = window.innerHeight * 0.5;
+      for(var i=0;i<nodes.length;i++){
+        var r = nodes[i].getBoundingClientRect();
+        var lit = r.height > 0 && r.top <= line && r.bottom >= line;
+        nodes[i].classList.toggle('is-lit', lit);
+      }
+    }
+    function request(){ if(!ticking){ ticking = true; requestAnimationFrame(update); } }
+    window.addEventListener('scroll', request, {passive:true});
+    window.addEventListener('resize', request);
+    window.addEventListener('load', request);
+    if(touchQuery.addEventListener) touchQuery.addEventListener('change', request);
+    // feed items arrive later from Substack, so re-check once they render
+    setTimeout(request, 1500); setTimeout(request, 4000);
+    request();
   })();
 
 </script>
