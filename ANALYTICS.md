@@ -1,79 +1,52 @@
-# THiNK site — analytics
+# THiNK site — analytics (Google Analytics 4)
 
-Analytics is built into `app.js` using **Plausible** (privacy-first, cookieless — no
-cookie-consent banner required). Pageviews and time-on-page are automatic; every
-interaction is also tracked as a named custom event.
+Measurement ID: **G-LXSZK10BWC** (GA4 property "THiNK website", Australia/Sydney time, AUD).
 
-## Turn it on (one line)
+- The Google tag (gtag.js) sits at the top of `<head>` on every page.
+- Pageviews, scrolls and outbound-link clicks come from GA4 **Enhanced Measurement**
+  (keep *Form interactions* OFF — the site sends its own form-success events).
+- Every interaction is a custom event sent through one `track(name, props)` function in
+  the ANALYTICS block (in `app.js` and the inline copy on each page). It converts the
+  readable name to GA4 snake_case, e.g. `track('Waitlist Signup')` → `waitlist_signup`.
 
-1. Create a Plausible account at https://plausible.io and add your site using the
-   **exact** domain you deploy to (for example `think.paneffect.co` — no `https://`,
-   no trailing slash). Self-hosting Plausible works too.
-2. In `app.js`, near the top, set your domain:
+Previous Plausible version is kept in `_backup_pre_GA4/`.
 
-   ```js
-   var ANALYTICS_DOMAIN = 'think.paneffect.co'; // <-- your Plausible domain
-   ```
+## Events sent
 
-   Until this is set it stays a silent no-op, so the site runs normally with
-   analytics off.
-3. Deploy. Pageviews and time-on-page start immediately.
+| GA4 event              | Fires when…                                   | Parameters            |
+|------------------------|-----------------------------------------------|-----------------------|
+| `offer_card_open`      | A TaaS offering is opened (hover or tap)      | `card`                |
+| `case_study_view`      | A case-study slide is navigated to            | `case`                |
+| `architecture_node`    | An Architecture node or Purpose is selected   | `node`                |
+| `faq_open`             | An FAQ item is expanded                       | `question`            |
+| `home_panel_click`     | A home portal panel is clicked                | `panel`               |
+| `cta_click`            | A call-to-action button/link is clicked       | `label`, `page`       |
+| `nav_click`            | A menu navigation link is clicked             | `to`                  |
+| `menu_open`            | The menu overlay is opened                    | —                     |
+| `waitlist_signup`      | The Exchange waitlist form submits OK         | —                     |
+| `taas_enquiry`         | The TaaS enquiry form submits OK              | —                     |
+| `substack_subscribe`   | The Ideas page subscribe form is submitted    | —                     |
+| `section_view`         | A page section first scrolls ~half into view  | `section`             |
+| `case_study_time`      | Dwell time on a case study (while on screen)  | `case`, `time`        |
+| `ideas_content_click`  | A Substack article/podcast is clicked         | `type`, `title`       |
 
-## See the custom events
+## One-off GA4 admin setup
 
-Plausible captures the events below automatically. To view each as a conversion
-count (and to build funnels), add it once under **Site settings → Goals → Add goal
-→ Custom event**, using the exact event name:
+1. **Admin → Events** (after events start arriving, up to 24h): mark `waitlist_signup`,
+   `taas_enquiry` and `substack_subscribe` as **Key events**.
+2. **Admin → Custom definitions → Create custom dimension** (scope: Event) for each
+   parameter: `card`, `case`, `node`, `question`, `panel`, `label`, `page`, `to`,
+   `section`, `time`, `type`, `title`. Without this the values are collected but not
+   reportable. Not retroactive — do it early.
+3. **Admin → Data retention**: raise from 2 to 14 months.
+4. **Admin → Data streams → Configure tag settings → List unwanted referrals** isn't
+   needed; but under *Define internal traffic* you can exclude the PAN office IP.
 
-| Event name          | Fires when…                                   | Property captured        |
-|---------------------|-----------------------------------------------|--------------------------|
-| `Offer Card Open`   | A TaaS offering is opened (hover or tap)      | `card` (Project/…)       |
-| `Case Study View`   | A case-study slide is navigated to            | `case` (name)            |
-| `Architecture Node` | An Architecture node or Purpose is selected   | `node` (name)            |
-| `FAQ Open`          | An FAQ item is expanded                       | `question`               |
-| `Home Panel Click`  | A home portal panel is clicked                | `panel` (Ideas/…)        |
-| `CTA Click`         | A call-to-action button/link is clicked       | `label`, `page`          |
-| `Nav Click`         | A menu navigation link is clicked             | `to` (destination)       |
-| `Menu Open`         | The menu overlay is opened                    | —                        |
-| `Waitlist Signup`   | The Exchange waitlist form submits OK         | —                        |
-| `TaaS Enquiry`      | The TaaS enquiry form submits OK              | —                        |
-| `Substack Subscribe`| The Ideas page subscribe form is submitted    | —                        |
-| `Section View`      | A page section first scrolls ~half into view  | `section` (name)         |
-| `Case Study Time`   | Dwell time on a case study (while on screen)   | `case`, `time` (bucket)  |
-| `Ideas Content Click`| A specific Substack article/podcast is clicked| `type`, `title`          |
+## Where to look
 
-### The three "interest" events, explained
-
-- **`Section View`** — fires once per section as the visitor scrolls it into view.
-  Read as a drop-off funnel down a page: how many reach *Case Studies*, then how
-  many make it to the *FAQ*. Answers "how far through the page do people get."
-- **`Case Study Time`** — measures how long a visitor lingers on each case study
-  while the carousel is on screen, reported as buckets (`0-5s`, `5-15s`, `15-30s`,
-  `30-60s`, `60s+`). Answers "which case study did they actually spend time on,"
-  not just which they clicked. (View the breakdown via the goal's Properties →
-  `case`, and cross-reference `time`.)
-- **`Ideas Content Click`** — which specific Substack article or podcast episode
-  they clicked from the Ideas page feed, with the title.
-
-Note: "which node / which FAQ / which card" needs no extra events — that detail is
-already in the `node` / `question` / `card` property on the existing goals above.
-
-To see a property breakdown (e.g. which card is opened most), click the goal in the
-dashboard and open the **Properties** tab.
-
-Outbound-link clicks (the footer PAN link, Substack links, `mailto:`) are tracked
-automatically and appear under **Outbound Links** — no goal needed.
-
-## Answering your questions
-
-- **Which pages people look at** → dashboard *Top Pages*.
-- **Which they spend the most time on** → *Top Pages* → *Time on Page* / *Visit
-  Duration*.
-- **Which card they open** → `Offer Card Open` goal → *Properties* → `card`.
-- **Funnels** (e.g. Home Panel Click → TaaS Enquiry) → Plausible *Funnels* (paid plans).
-
-## Switching providers later
-
-Everything routes through one `track(name, props)` function and one injected snippet
-at the top of `app.js`. To move to GA4/PostHog/etc., change only that block — the
-event instrumentation across the site stays as-is.
+- Which pages / time on page → Reports → Engagement → **Pages and screens**.
+- Which card / FAQ / case study → Explore → Free form, dimension = the custom
+  dimension, filter Event name = the event.
+- Funnels (e.g. home_panel_click → taas_enquiry) → Explore → **Funnel exploration**.
+- Live check → Reports → **Realtime**, or Admin → **DebugView** with the
+  Google Tag Assistant extension.

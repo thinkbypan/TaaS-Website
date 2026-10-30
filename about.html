@@ -2,6 +2,14 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-LXSZK10BWC"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-LXSZK10BWC');
+</script>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <title>Who is THiNK</title>
 <link rel="icon" href="favicon.ico" sizes="any">
@@ -1535,37 +1543,23 @@
 </div>
 <script>
   // ==========================================================================
-  // ANALYTICS
+  // ANALYTICS — Google Analytics 4 (G-LXSZK10BWC)
   // --------------------------------------------------------------------------
-  // One place to configure analytics for the whole site. Set ANALYTICS_DOMAIN
-  // to the exact domain you register in your Plausible account (for example
-  // 'think.paneffect.co' — no https://, no trailing slash). Until it is set,
-  // every call below is a silent no-op, so the site works normally before
-  // analytics is switched on.
-  //
-  // Pageviews and time-on-page are tracked automatically once the domain is
-  // set. Everything else is a custom event sent through track(name, props).
-  // Because all tracking flows through track(), you can switch providers later
-  // by editing only this block (e.g. swap the injected snippet + track body).
+  // The Google tag itself is loaded in each page's <head>. Pageviews, scrolls
+  // and outbound-link clicks come from GA4 Enhanced Measurement automatically.
+  // Every interaction is a custom event sent through track(name, props), which
+  // converts the readable name to GA4's snake_case ('Waitlist Signup' ->
+  // 'waitlist_signup'). To switch providers later, edit only this block.
   // ==========================================================================
-  var ANALYTICS_DOMAIN = 'thinkbypan.netlify.app'; // <-- set to your Plausible domain to turn analytics on
-
-  (function(){
-    if(!ANALYTICS_DOMAIN) return;
-    var s = document.createElement('script');
-    s.defer = true;
-    s.setAttribute('data-domain', ANALYTICS_DOMAIN);
-    // This Plausible build also auto-tracks outbound-link clicks (the footer
-    // PAN link, Substack links, mailto), so those need no manual code.
-    s.src = 'https://plausible.io/js/script.outbound-links.js';
-    document.head.appendChild(s);
-  })();
-  // queue stub so events fired before the script loads are not lost
-  window.plausible = window.plausible || function(){ (window.plausible.q = window.plausible.q || []).push(arguments); };
+  window.dataLayer = window.dataLayer || [];
+  window.gtag = window.gtag || function(){ window.dataLayer.push(arguments); };
 
   // track(name, props?) — the single entry point for every custom event.
   function track(name, props){
-    try { window.plausible(name, props ? { props: props } : undefined); } catch(e){}
+    try {
+      var ev = String(name).toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_+|_+$/g, '').slice(0, 40);
+      window.gtag('event', ev, props || {});
+    } catch(e){}
   }
   var clean = function(s){ return (s || '').replace(/\s+/g, ' ').trim().slice(0, 80); };
 
