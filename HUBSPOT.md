@@ -34,6 +34,7 @@ so no region setting is needed anywhere in the code.
 |------|--------------|--------------------|-------|
 | Exchange waitlist | ✅ created | ✅ portal + GUID filled in | **Ready — deploy & test** |
 | TaaS enquiry | ✅ created | ✅ GUID filled in | **Ready — deploy & test** |
+| Exchange survey (`survey.html`) | ✅ created (`b0dd40da-c7dc-48c2-8c11-4de3b42ab3e1`) | ✅ in `survey.html`'s own script | **Ready — deploy & test** |
 
 The config lives at the top of the `HUBSPOT` block in `app.js`:
 
@@ -145,3 +146,22 @@ required** on the HubSpot forms, or empty-phone submissions get rejected.
 
 Both `Waitlist Signup` and `TaaS Enquiry` Plausible events still fire on success,
 so analytics is unaffected.
+
+---
+
+## 3. Exchange survey (`survey.html`)
+
+Post-event survey for attendees. Not in the site nav and marked `noindex` — share the
+link (thinkbypan.co/survey.html) directly. Its HubSpot code is self-contained in the
+page's script (`HS_PORTAL_ID`, `HS_FORM_GUID`, `HS_EVENT_NAME` at the top), not in `app.js`.
+
+Fields sent (all optional; blanks are skipped). Each must be a field on the survey form:
+`email`, `firstname`, `lastname`, `think_survey_why` (multiple checkboxes, values joined
+with `;`), `think_survey_why_other`, `think_survey_spark`, `think_survey_resonated`,
+`think_survey_conversations`, `think_survey_future`, `think_survey_experience`,
+`think_survey_event`.
+
+Change `HS_EVENT_NAME` before each event so responses can be told apart. No email →
+HubSpot logs the submission on the form but creates no contact. Success fires the GA4
+event `survey_submitted`; a failure logs `HubSpot 400: ...` to the console and offers an
+email fallback to think@paneffect.co.

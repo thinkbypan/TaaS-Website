@@ -13,6 +13,7 @@ build step required.
 | `exchange.html` | THiNK Exchange + waitlist|
 | `taas.html`     | THiNK-as-a-Service       |
 | `about.html`    | Who is THiNK             |
+| `survey.html`   | Exchange post-event survey (unlisted) |
 | `styles.css`    | Shared styles + fonts    |
 | `app.js`        | Shared JavaScript        |
 | `netlify.toml`  | Netlify deploy config    |
